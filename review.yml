@@ -1,0 +1,151 @@
+aid: 1uphealth
+name: 1upHealth
+review:
+  question: Does 1upHealth expose a documented public developer surface, and is it FHIR/SMART-on-FHIR?
+  answer: true
+  date: '2026-07-24'
+  reviewer: API Evangelist
+  homeMarket: United States
+findings:
+  summary: |
+    1upHealth publishes a live, public developer documentation portal at
+    https://docs.1up.health/ (HTTP 200) covering its HL7 FHIR-first health data
+    platform. The company runs a managed, HIPAA-compliant FHIR REST API cloud
+    server at https://api.1up.health that serves three FHIR versions
+    concurrently, each publishing a live machine-readable conformance document:
+    FHIR R4 (4.0.1) at /fhir/r4/metadata (CapabilityStatement, 144 resources),
+    FHIR STU3 (3.0.2) at /fhir/stu3/metadata (CapabilityStatement, 117
+    resources), and FHIR DSTU2 (1.0.2) at /fhir/dstu2/metadata (Conformance, 94
+    resources). All three metadata documents were fetched (HTTP 200) and saved
+    verbatim into fhir/. The R4 CapabilityStatement declares restful security
+    service SMART-on-FHIR with SMART oauth-uris (authorize
+    https://auth.1up.health/oauth2/authorize/system, token
+    https://auth.1up.health/oauth2/token). Product solutions documented on the
+    portal map to US federal interoperability mandates: Patient Access, Provider
+    Access, Payer-to-Payer Data Exchange, Provider Directory, and Electronic
+    Prior Authorization (CMS-0057-F), plus Patient Connect and Population Connect
+    (Bulk FHIR) connectivity. Public product docs are self-serve to read;
+    provisioning API credentials requires the developer console at
+    https://developer.1up.health/, which redirects (HTTP 302) to a gated login
+    at https://app.1up.health/login - so the surface is documented-but-gated for
+    live access. No downloadable REST OpenAPI/Swagger was found; the FHIR
+    CapabilityStatements are the machine-readable contracts.
+  developerPortal:
+    url: https://docs.1up.health/
+    httpStatus: 200
+    confirmed: true
+  fhirCapabilityStatement:
+    captured: true
+    servers:
+      - version: R4
+        fhirVersion: 4.0.1
+        metadataURL: https://api.1up.health/fhir/r4/metadata
+        httpStatus: 200
+        resourceType: CapabilityStatement
+        resourceCount: 144
+        savedAs: fhir/1uphealth-fhir-r4-capabilitystatement.json
+        security: SMART-on-FHIR
+      - version: STU3
+        fhirVersion: 3.0.2
+        metadataURL: https://api.1up.health/fhir/stu3/metadata
+        httpStatus: 200
+        resourceType: CapabilityStatement
+        resourceCount: 117
+        savedAs: fhir/1uphealth-fhir-stu3-capabilitystatement.json
+      - version: DSTU2
+        fhirVersion: 1.0.2
+        metadataURL: https://api.1up.health/fhir/dstu2/metadata
+        httpStatus: 200
+        resourceType: Conformance
+        resourceCount: 94
+        savedAs: fhir/1uphealth-fhir-dstu2-conformance.json
+  smartConfiguration:
+    wellKnownURL: https://api.1up.health/.well-known/smart-configuration
+    httpStatus: 403
+    note: SMART well-known endpoint returns 403 anonymously; SMART oauth-uris are instead published inside the R4 CapabilityStatement security extension.
+  auth:
+    model: SMART-on-FHIR (OAuth 2.0)
+    authorizationEndpoint: https://auth.1up.health/oauth2/authorize/system
+    tokenEndpoint: https://auth.1up.health/oauth2/token
+    grants:
+      - authorization_code (user-authorized patient access)
+      - client_credentials (system / bulk access)
+    note: Documented as "Client credentials and OAuth 2.0"; R4 CapabilityStatement declares restful-security-service SMART-on-FHIR.
+  downloadableSpecs:
+    openapi: false
+    count: 3
+    provenance:
+      - fetched: https://api.1up.health/fhir/r4/metadata
+        savedAs: fhir/1uphealth-fhir-r4-capabilitystatement.json
+        httpStatus: 200
+        method: "curl -H 'Accept: application/fhir+json'"
+        date: '2026-07-24'
+      - fetched: https://api.1up.health/fhir/stu3/metadata
+        savedAs: fhir/1uphealth-fhir-stu3-capabilitystatement.json
+        httpStatus: 200
+        method: "curl -H 'Accept: application/fhir+json'"
+        date: '2026-07-24'
+      - fetched: https://api.1up.health/fhir/dstu2/metadata
+        savedAs: fhir/1uphealth-fhir-dstu2-conformance.json
+        httpStatus: 200
+        method: "curl -H 'Accept: application/fhir+json'"
+        date: '2026-07-24'
+  standardsConformance:
+    fhir: true
+    usCore: likely
+    carinBlueButton: likely
+    daVinci: likely
+    ukCore: false
+    auCore: false
+    note: >-
+      Product solutions (Patient Access, Provider Access, Payer-to-Payer,
+      Provider Directory, ePA) map to the US interoperability IGs (US Core,
+      CARIN Blue Button, Da Vinci PDEX/Plan-Net/PAS). Specific IG package
+      declarations were not exhaustively verified in the CapabilityStatements at
+      bootstrap time; marked "likely" rather than asserted.
+  accessPosture:
+    docs: self-serve-public
+    credentials: gated
+    note: Public product documentation is readable without an account; API credentials require the developer console (login-gated).
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.1up.health/fhir/r4
+      documented: true
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.1up.health/fhir/stu3
+      documented: true
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.1up.health/fhir/dstu2
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented; FHIR Subscription and Bulk Data (async 202 + polling) cover event/bulk patterns.
+sources:
+  - url: https://1up.health/
+    type: Website
+    note: Corporate marketing site; FHIR-first health data platform for health plans.
+  - url: https://docs.1up.health/
+    type: DeveloperPortal
+    note: Public developer documentation (HTTP 200).
+  - url: https://docs.1up.health/docs/fhir-info
+    type: Documentation
+    note: FHIR platform overview; managed HIPAA-compliant FHIR API cloud server.
+  - url: https://api.1up.health/fhir/r4/metadata
+    type: CapabilityStatement
+    note: FHIR R4 4.0.1, 144 resources, SMART-on-FHIR oauth-uris (HTTP 200).
+  - url: https://api.1up.health/fhir/stu3/metadata
+    type: CapabilityStatement
+    note: FHIR STU3 3.0.2, 117 resources (HTTP 200).
+  - url: https://api.1up.health/fhir/dstu2/metadata
+    type: CapabilityStatement
+    note: FHIR DSTU2 1.0.2 Conformance, 94 resources (HTTP 200).
+  - url: https://developer.1up.health/
+    type: DeveloperConsole
+    note: Redirects (302) to gated login at https://app.1up.health/login.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

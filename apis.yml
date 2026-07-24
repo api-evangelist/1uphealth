@@ -1,0 +1,240 @@
+aid: 1uphealth
+url: https://raw.githubusercontent.com/api-evangelist/1uphealth/refs/heads/main/apis.yml
+name: 1upHealth
+kind: company
+description: >-
+  1upHealth is a US healthcare data interoperability company, founded in 2017 and
+  headquartered in Boston, Massachusetts, that operates an HL7 FHIR-first health data
+  platform for claims and clinical data acquisition, exchange, and compute. Built on a
+  lakehouse architecture, the platform lets health plans, providers, and digital health
+  developers ingest, normalize, store, and query patient and member data as FHIR, and
+  ships modular solutions aligned to US federal interoperability mandates - Patient
+  Access, Provider Access, Payer-to-Payer Data Exchange, Provider Directory, Formulary,
+  and Electronic Prior Authorization (CMS Interoperability & Prior Authorization,
+  CMS-0057-F). 1upHealth runs a managed, HIPAA-compliant FHIR REST API cloud server
+  exposing FHIR R4 (4.0.1), STU3 (3.0.2), and DSTU2 (1.0.2) endpoints, each publishing a
+  live CapabilityStatement, secured with SMART-on-FHIR OAuth 2.0. The company is
+  HITRUST, SOC 2, and HIPAA aligned. Home market is the United States. Developer
+  documentation is public at docs.1up.health, while provisioning API credentials and the
+  developer console require an account (gated self-serve / partner onboarding).
+accessModel:
+  pricing: enterprise
+  onboarding: gated
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Gated developer console (public docs)
+  confidence: high
+  source:
+  - authentication
+  - documentation
+  generated: '2026-07-24'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Healthcare
+- United States
+- FHIR
+- HL7
+- Interoperability
+- SMART on FHIR
+- Payer
+- Claims
+- Patient Access
+- Health Data
+created: '2026-07-24'
+modified: '2026-07-24'
+specificationVersion: '0.19'
+apis:
+- aid: 1uphealth:1uphealth-fhir-r4-api
+  name: 1up FHIR API (R4)
+  description: >-
+    1upHealth's managed HL7 FHIR R4 (4.0.1) REST API cloud server, exposing 144 FHIR
+    resource types with SMART-on-FHIR OAuth 2.0 security. Publishes a live
+    CapabilityStatement at /fhir/r4/metadata.
+  humanURL: https://docs.1up.health/docs/fhir-info
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - FHIR
+  - Healthcare
+  - Interoperability
+  properties:
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+  - type: Documentation
+    url: https://docs.1up.health/docs/fhir-info
+  - type: Authentication
+    url: https://auth.1up.health/oauth2/authorize/system
+- aid: 1uphealth:1uphealth-fhir-stu3-api
+  name: 1up FHIR API (STU3)
+  description: >-
+    1upHealth's managed HL7 FHIR STU3 (3.0.2) REST API cloud server, exposing 117 FHIR
+    resource types. Publishes a live CapabilityStatement at /fhir/stu3/metadata.
+  humanURL: https://docs.1up.health/docs/fhir-info
+  baseURL: https://api.1up.health/fhir/stu3
+  tags:
+  - FHIR
+  - Healthcare
+  - Interoperability
+  properties:
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-stu3-capabilitystatement.json
+  - type: Documentation
+    url: https://docs.1up.health/docs/fhir-info
+- aid: 1uphealth:1uphealth-fhir-dstu2-api
+  name: 1up FHIR API (DSTU2)
+  description: >-
+    1upHealth's managed HL7 FHIR DSTU2 (1.0.2) REST API cloud server, exposing 94 FHIR
+    resource types. Publishes a live Conformance statement at /fhir/dstu2/metadata.
+  humanURL: https://docs.1up.health/docs/fhir-info
+  baseURL: https://api.1up.health/fhir/dstu2
+  tags:
+  - FHIR
+  - Healthcare
+  - Interoperability
+  properties:
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-dstu2-conformance.json
+  - type: Documentation
+    url: https://docs.1up.health/docs/fhir-info
+- aid: 1uphealth:1uphealth-patient-access-api
+  name: 1up Patient Access API
+  description: >-
+    CMS Patient Access solution delivering member clinical and claims data to
+    patient-authorized third-party apps over FHIR, aligned to the CARIN Blue Button and
+    US Core implementation guides.
+  humanURL: https://docs.1up.health/docs/patient-access
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Patient Access
+  - FHIR
+  - Payer
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/patient-access
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+- aid: 1uphealth:1uphealth-provider-access-api
+  name: 1up Provider Access API
+  description: >-
+    CMS Provider Access solution enabling payers to share member data with in-network
+    providers over FHIR, aligned to the Da Vinci implementation guides.
+  humanURL: https://docs.1up.health/docs/provider-access
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Provider Access
+  - FHIR
+  - Payer
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/provider-access
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+- aid: 1uphealth:1uphealth-payer-to-payer-api
+  name: 1up Payer-to-Payer Data Exchange API
+  description: >-
+    CMS Payer-to-Payer Data Exchange solution for sharing a member's historical clinical
+    and claims data between health plans over FHIR when a member changes payers.
+  humanURL: https://docs.1up.health/docs/payer-to-payer
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Payer to Payer
+  - FHIR
+  - Payer
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/payer-to-payer
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+- aid: 1uphealth:1uphealth-provider-directory-api
+  name: 1up Provider Directory API
+  description: >-
+    Publicly accessible FHIR Provider Directory publishing accurate provider and network
+    listings, aligned to the Da Vinci PDEX Plan-Net implementation guide.
+  humanURL: https://docs.1up.health/docs/provider-directory
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Provider Directory
+  - FHIR
+  - Payer
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/provider-directory
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+- aid: 1uphealth:1uphealth-epa-api
+  name: 1up Electronic Prior Authorization API
+  description: >-
+    CMS-0057-F Electronic Prior Authorization solution automating prior authorization
+    submission and decisioning over FHIR, aligned to the Da Vinci PAS / DTR / CRD
+    implementation guides.
+  humanURL: https://docs.1up.health/docs/epa
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Prior Authorization
+  - FHIR
+  - Payer
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/epa
+  - type: CapabilityStatement
+    url: fhir/1uphealth-fhir-r4-capabilitystatement.json
+- aid: 1uphealth:1uphealth-patient-connect-api
+  name: 1up Patient Connect
+  description: >-
+    Connectivity solution that acquires patient-authorized clinical records from a
+    national network of EHR/provider and payer connections and normalizes them into the
+    1up FHIR data store.
+  humanURL: https://docs.1up.health/docs/patient-connect
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Patient Connect
+  - FHIR
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/patient-connect
+- aid: 1uphealth:1uphealth-population-connect-api
+  name: 1up Population Connect (Bulk FHIR)
+  description: >-
+    Population-scale connectivity and Bulk Data (Flat FHIR) export solution for acquiring
+    and computing over large member/patient populations as FHIR.
+  humanURL: https://docs.1up.health/docs/pop-connect
+  baseURL: https://api.1up.health/fhir/r4
+  tags:
+  - Bulk FHIR
+  - Population
+  - Interoperability
+  properties:
+  - type: Documentation
+    url: https://docs.1up.health/docs/pop-connect
+common:
+- type: Website
+  url: https://1up.health/
+- type: DeveloperPortal
+  url: https://docs.1up.health/
+- type: Documentation
+  url: https://docs.1up.health/
+- type: DeveloperConsole
+  url: https://developer.1up.health/
+- type: Blog
+  url: https://1up.health/blog/
+- type: StatusPage
+  url: https://status.1up.health/
+- type: TrustCenter
+  url: https://trust.1up.health/
+- type: Security
+  url: https://trust.1up.health/
+- type: Support
+  url: https://1uphealth.my.site.com/
+- type: SignUp
+  url: https://app.1up.health/login
+- type: GitHubOrganization
+  url: https://github.com/1uphealth
+- type: TermsOfService
+  url: https://1up.health/terms-of-service/
+- type: PrivacyPolicy
+  url: https://1up.health/privacy-policy/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
