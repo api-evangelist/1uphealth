@@ -1,0 +1,16 @@
+generated: '2026-07-24'
+method: searched
+probe: true
+source: https://trust.1up.health/
+url: https://trust.1up.health/
+certifications:
+- SOC 2
+- HIPAA
+- CSA STAR
+evidence:
+- source: https://trust.1up.health/
+  keywords:
+  - soc 2
+  - hipaa
+  - trust center
+  - csa star

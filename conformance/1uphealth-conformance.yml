@@ -1,0 +1,59 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  fhir/1uphealth-fhir-r4-capabilitystatement.json + https://docs.1up.health/docs +
+  https://trust.1up.health/
+standards:
+  - id: hl7-fhir-r4
+    conforms: true
+    evidence: Live CapabilityStatement fhirVersion 4.0.1 with 144 resource types.
+  - id: hl7-fhir-stu3
+    conforms: true
+    evidence: Live CapabilityStatement fhirVersion 3.0.2 with 117 resource types.
+  - id: hl7-fhir-dstu2
+    conforms: true
+    evidence: Live Conformance statement fhirVersion 1.0.2 with 94 resource types.
+  - id: smart-on-fhir
+    conforms: true
+    evidence: restful-security-service code=SMART-on-FHIR; oauth-uris authorize/token advertised.
+  - id: oauth2
+    conforms: true
+    evidence: SMART-on-FHIR OAuth 2.0 (authorization_code + client_credentials).
+  - id: oidc
+    conforms: true
+    evidence: CMS solution APIs front OpenID Connect / Keycloak realms.
+  - id: fhir-bulk-data
+    conforms: true
+    evidence: Patient/$export, Group/$export operations; documented Bulk Data (Flat FHIR) export.
+  - id: us-core
+    conforms: true
+    evidence: Patient Access aligned to US Core implementation guide (docs).
+  - id: carin-bb
+    conforms: true
+    evidence: Patient Access aligned to CARIN Blue Button (docs).
+  - id: davinci-pdex
+    conforms: true
+    evidence: Provider Access / Payer-to-Payer aligned to Da Vinci PDex; Provider Directory to PDex Plan-Net.
+  - id: davinci-pas-dtr-crd
+    conforms: true
+    evidence: Electronic Prior Authorization aligned to Da Vinci PAS / DTR / CRD guides.
+  - id: cms-0057-f
+    conforms: true
+    evidence: Solutions aligned to CMS Interoperability & Prior Authorization Final Rule (CMS-0057-F).
+  - id: sql-on-fhir
+    conforms: true
+    evidence: SQL on FHIR analytics surface documented on the platform.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: FHIR uses OperationOutcome, not application/problem+json.
+compliance_program:
+  published: true
+  source: https://trust.1up.health/
+  certifications:
+    - SOC 2
+    - HIPAA
+    - HITRUST
+    - CSA STAR
+  note: >-
+    HITRUST and HIPAA alignment stated in company materials; SOC 2, HIPAA and CSA STAR
+    surfaced from the 1up Trust Center. See security/1uphealth-trust-center.yml.

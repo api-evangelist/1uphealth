@@ -1,0 +1,18 @@
+generated: '2026-07-24'
+method: generated
+source: >-
+  Grounded in fhir/1uphealth-fhir-r4-capabilitystatement.json (real FHIR interactions
+  and operations) + authentication/, conventions/, errors/ artifacts.
+skills:
+  - file: 1uphealth-query-patient-data.md
+    name: Authenticate and query a patient's FHIR data
+    api: fhir/1uphealth-fhir-r4-capabilitystatement.json
+    operations: [token, search-type, read, Patient/$everything]
+  - file: 1uphealth-bulk-export.md
+    name: Run a Bulk Data (Flat FHIR) group export
+    api: fhir/1uphealth-fhir-r4-capabilitystatement.json
+    operations: [token, Group/$export]
+  - file: 1uphealth-write-with-concurrency.md
+    name: Create and update FHIR resources with optimistic concurrency
+    api: fhir/1uphealth-fhir-r4-capabilitystatement.json
+    operations: [create, update, vread]

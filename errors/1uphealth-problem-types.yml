@@ -1,0 +1,64 @@
+generated: '2026-07-24'
+method: derived
+source: >-
+  Derived from HL7 FHIR R4 RESTful error semantics as declared by
+  fhir/1uphealth-fhir-r4-capabilitystatement.json (format application/fhir+json,
+  SMART-on-FHIR security). Enriched from https://docs.1up.health/docs/fhir-info
+format: fhir-operationoutcome
+envelope:
+  resourceType: OperationOutcome
+  fields:
+    - issue[].severity   # fatal | error | warning | information
+    - issue[].code       # FHIR issue-type code
+    - issue[].diagnostics
+    - issue[].details.text
+notes: >-
+  1up returns standard FHIR errors as an OperationOutcome resource carrying one or more
+  issue entries, alongside the HTTP status. The catalog below maps the HTTP statuses a
+  FHIR REST server returns to their OperationOutcome issue codes; the diagnostics text is
+  server-generated per request.
+problems:
+  - status: 400
+    issue_code: invalid
+    title: Invalid request / malformed FHIR
+    remediation: Fix the request body or search parameter syntax against the resource profile.
+  - status: 401
+    issue_code: login
+    title: Unauthenticated
+    remediation: Obtain a SMART-on-FHIR OAuth 2.0 access token and send it as a Bearer token.
+  - status: 403
+    issue_code: forbidden
+    title: Insufficient scope / access denied
+    remediation: Request an access token whose SMART scopes cover the resource and interaction.
+  - status: 404
+    issue_code: not-found
+    title: Resource not found
+    remediation: Verify the resource type, id, and FHIR release path (/fhir/r4|stu3|dstu2).
+  - status: 405
+    issue_code: not-supported
+    title: Interaction not supported
+    remediation: Check the CapabilityStatement for the interactions this server allows on the resource.
+  - status: 409
+    issue_code: conflict
+    title: Version conflict (optimistic concurrency)
+    remediation: Re-read the resource, then retry the update with an If-Match matching the current ETag/versionId.
+  - status: 410
+    issue_code: deleted
+    title: Resource deleted
+    remediation: The resource id has been deleted; use _history to inspect prior versions.
+  - status: 412
+    issue_code: conflict
+    title: Precondition failed
+    remediation: The If-Match / If-None-Exist precondition did not hold; re-evaluate and retry.
+  - status: 422
+    issue_code: processing
+    title: Unprocessable FHIR resource (validation failed)
+    remediation: Run $validate; correct the resource against the profile/implementation guide.
+  - status: 429
+    issue_code: throttled
+    title: Too many requests
+    remediation: Back off and retry; contact 1up for contracted throughput.
+  - status: 500
+    issue_code: exception
+    title: Server error
+    remediation: Retry idempotent operations; contact 1up support if it persists.

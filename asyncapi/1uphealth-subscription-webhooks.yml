@@ -1,0 +1,30 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  fhir/1uphealth-fhir-r4-capabilitystatement.json (Subscription resource) +
+  HL7 FHIR R4 Subscription framework
+spec_type: Webhooks
+surface: fhir-subscription
+summary: >-
+  1up's event/notification surface is the FHIR Subscription resource, supported on the
+  R4 endpoint (declared in the CapabilityStatement). A client registers a Subscription
+  with a search-expression criteria and a rest-hook channel; when matching resources
+  change, the server POSTs a notification to the client's endpoint. This is 1up's
+  webhook mechanism for near-real-time change notification over FHIR.
+subscription:
+  resource: Subscription
+  fhir_release: r4
+  channel_types:
+    - type: rest-hook
+      detail: HTTPS callback (webhook) POSTed to Subscription.channel.endpoint on match.
+  fields:
+    - Subscription.criteria      # FHIR search expression selecting resources of interest
+    - Subscription.channel.type  # rest-hook
+    - Subscription.channel.endpoint
+    - Subscription.channel.payload
+    - Subscription.status        # requested | active | error | off
+  security: SMART-on-FHIR OAuth 2.0 (same as REST surface)
+notes: >-
+  Delivery is a FHIR resource/Bundle payload (or id-only ping, per channel.payload) to
+  the subscriber endpoint. No separate AsyncAPI document is published; this artifact
+  captures the webhook/event catalog derived from the live CapabilityStatement.

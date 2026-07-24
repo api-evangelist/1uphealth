@@ -1,0 +1,49 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.1up.health/docs/release-notes
+scheme: calendar (YY.MM[.patch])
+current: '26.06.2'
+notes: >-
+  1up publishes a dated release-notes feed for the platform / 1up Console and the CMS
+  solution APIs. Entries below are the recent window captured from the public docs; the
+  live release-notes page is the source of truth.
+entries:
+  - version: '26.06.2'
+    highlights:
+      - Access management (user management, PHI permissions) added to 1up Console for admins.
+      - Member Directory launched for payers (phased rollout).
+      - Provider Access API now supports PDexProviderGroup for attribution group requests.
+    breaking: false
+  - version: '26.05.2'
+    highlights:
+      - Usage Reporting adds a Previous Month filter; back-button navigation improved.
+      - Patient Viewer highlights invalid date-of-birth fields.
+    breaking: false
+  - version: '26.05'
+    highlights:
+      - OneUp Clinical Connector available for Athena EHR integration.
+    breaking: false
+  - version: '26.04.2'
+    highlights:
+      - Console footer with version number and support links.
+      - API Usage Reports rendering fixes.
+    breaking: false
+  - version: '26.04'
+    highlights:
+      - Member Data Sharing page added under Reporting; FHIR Resources page removed.
+      - Payer-to-Payer opt-in pages support configurable logos and partial-match search.
+    breaking: false
+  - version: '26.03.2'
+    highlights:
+      - Provider Access adds member opt-out; Payer-to-Payer adds member opt-in.
+    breaking: false
+  - version: '24.12'
+    highlights:
+      - Weekly verification of Patient Connect endpoints; 109 new clinical endpoints added since Jun 2024.
+      - Majority of connections upgraded from DSTU2 to R4.
+    breaking: false
+  - version: '24.10'
+    highlights:
+      - New System Search API endpoints (Admin System Search, Zip Code Search).
+      - Patient Connect OnDemand Ingest, Token Status, and Revoke Data Access APIs added.
+    breaking: false

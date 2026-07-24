@@ -1,0 +1,76 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  fhir/1uphealth-fhir-r4-capabilitystatement.json + HL7 FHIR R4 RESTful conventions +
+  https://docs.1up.health/docs/fhir-info
+docs: https://docs.1up.health/docs/fhir-info
+summary: >-
+  1up exposes a standards-conformant HL7 FHIR REST API (R4 4.0.1, STU3 3.0.2, DSTU2
+  1.0.2). Cross-cutting request/response semantics follow the FHIR RESTful specification:
+  SMART-on-FHIR OAuth 2.0 auth, Bundle/link-based paging, FHIR search parameters,
+  ETag/If-Match optimistic concurrency (version-aware updates), OperationOutcome error
+  envelopes, and _format content negotiation.
+authentication:
+  style: SMART-on-FHIR OAuth 2.0 (Bearer)
+  detail: authentication/1uphealth-authentication.yml
+idempotency:
+  supported: true
+  mechanisms:
+    - name: version-aware update (optimistic concurrency)
+      detail: >-
+        Every resource declares versioning=versioned-update in the CapabilityStatement.
+        Updates (PUT) are idempotent and require the client to echo the current version
+        via the If-Match header (matched against the resource ETag / meta.versionId);
+        a stale version is rejected with 409/412, preventing lost updates and duplicate
+        state transitions.
+      headers: [If-Match, ETag]
+      evidence: fhir/1uphealth-fhir-r4-capabilitystatement.json (resource.versioning)
+    - name: conditional create / conditional update
+      detail: >-
+        FHIR conditional interactions (If-None-Exist for create, search-param match for
+        update) let a client make create/update operations idempotent by natural key,
+        avoiding duplicate resources on retry.
+      headers: [If-None-Exist, If-Match]
+    - name: PUT update semantics
+      detail: HTTP PUT to a known resource id is inherently idempotent per FHIR REST.
+pagination:
+  style: bundle-link
+  detail: >-
+    Search responses are FHIR Bundles. Paging is driven by Bundle.link relations
+    (self / next / previous / first / last); page size is requested with the _count
+    search parameter.
+  request_params: [_count, _offset, _sort]
+  response_fields: ['Bundle.link[relation=next].url', Bundle.total, Bundle.entry]
+search:
+  style: FHIR search parameters
+  detail: >-
+    Resource-typed search with declared search parameters (e.g. Patient has 25+ params);
+    supports chaining, _include/_revinclude, _lastUpdated, and modifiers per the FHIR
+    search spec. Each resource's supported params are enumerated in the CapabilityStatement.
+  global_params: [_id, _lastUpdated, _include, _revinclude, _summary, _elements, _sort, _count]
+content_negotiation:
+  formats: [application/fhir+json, json]
+  param: _format
+versioning:
+  scheme: fhir-release-in-path
+  detail: >-
+    The FHIR release is selected by URL path segment: /fhir/r4 (4.0.1), /fhir/stu3
+    (3.0.2), /fhir/dstu2 (1.0.2). Resource-level history/versioning uses meta.versionId
+    and the _history interaction. The developer console/platform is released on a
+    calendar scheme (YY.MM[.patch]) tracked in the changelog.
+  detail_ref: lifecycle/1uphealth-lifecycle.yml
+error_envelope:
+  shape: FHIR OperationOutcome
+  detail: >-
+    Errors are returned as a FHIR OperationOutcome resource with issue[].severity,
+    issue[].code, and issue[].diagnostics, alongside the HTTP status.
+  detail_ref: errors/1uphealth-problem-types.yml
+bulk_data:
+  detail: >-
+    Population-scale export uses the FHIR Bulk Data (Flat FHIR) async pattern:
+    kick-off with Prefer: respond-async on $export, poll the Content-Location status
+    URL, then download NDJSON files.
+  operations: [Patient/$export, Group/$export, System $export]
+rate_limits:
+  detail: >-
+    Enterprise/contracted throughput; no public per-key rate-limit table published.

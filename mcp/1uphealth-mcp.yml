@@ -1,0 +1,50 @@
+generated: '2026-07-24'
+method: derived
+status: candidate
+source: >-
+  Derived from fhir/1uphealth-fhir-r4-capabilitystatement.json interactions and
+  operations (search-type, read, vread, create, update, delete, $everything, $export,
+  $validate). No official 1up MCP server is published; this is a candidate tool surface.
+server:
+  name: 1uphealth-fhir
+  transport: http
+  url: null
+  auth: SMART-on-FHIR OAuth 2.0 (Bearer) - see authentication/1uphealth-authentication.yml
+notes: >-
+  A candidate MCP tool projection over the 1up FHIR API. Each tool maps to a standard
+  FHIR RESTful interaction available on the R4 endpoint (144 resource types). Resource
+  type is a parameter rather than one tool per resource. Real input schemas are the FHIR
+  search parameters / resource profiles declared per resource in the CapabilityStatement.
+tools:
+  - name: search_fhir_resources
+    description: Search any supported FHIR resource type with FHIR search parameters.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#search-type
+    inputs: [resourceType, searchParams, _count, _sort]
+  - name: read_fhir_resource
+    description: Read a single FHIR resource by type and id.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#read
+    inputs: [resourceType, id]
+  - name: vread_fhir_resource
+    description: Read a specific historical version of a resource.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#vread
+    inputs: [resourceType, id, versionId]
+  - name: create_fhir_resource
+    description: Create a FHIR resource (optionally conditional via If-None-Exist).
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#create
+    inputs: [resourceType, body, ifNoneExist]
+  - name: update_fhir_resource
+    description: Update a FHIR resource with optimistic concurrency (If-Match / ETag).
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#update
+    inputs: [resourceType, id, body, ifMatch]
+  - name: patient_everything
+    description: Retrieve all data in a patient's compartment.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#Patient/$everything
+    inputs: [patientId]
+  - name: bulk_export
+    description: Kick off a Bulk Data (Flat FHIR) NDJSON export for a Group or the system.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#Group/$export
+    inputs: [groupId, _type, _since]
+  - name: validate_fhir_resource
+    description: Validate a resource against its profile via $validate.
+    source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#$validate
+    inputs: [resourceType, body]

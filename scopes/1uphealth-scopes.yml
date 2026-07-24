@@ -1,0 +1,45 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  fhir/1uphealth-fhir-r4-capabilitystatement.json (SMART-on-FHIR) +
+  https://docs.1up.health/docs/get-started/o-auth
+docs: https://docs.1up.health/docs/get-started/o-auth
+model: SMART-on-FHIR
+notes: >-
+  1up FHIR authorization uses the SMART-on-FHIR scope grammar. Access is granted per
+  context (system / user / patient) and per FHIR resource type with .read / .write / .*
+  (SMART v1) or .rs / .cruds (SMART v2) permission suffixes. Bulk Data ($export) uses the
+  documented composite scope `bulk-data|user/*.rs`. The scope surface below captures the
+  documented scope verbatim plus the SMART scope patterns the platform advertises; the
+  full effective scope set is negotiated per client at registration in the 1up Dev Portal.
+schemes:
+  - name: SMARTonFHIR
+    source: fhir/1uphealth-fhir-r4-capabilitystatement.json
+    flows:
+      - flow: clientCredentials
+        tokenUrl: https://auth.1up.health/oauth2/token
+      - flow: authorizationCode
+        authorizationUrl: https://auth.1up.health/oauth2/authorize/system
+        tokenUrl: https://auth.1up.health/oauth2/token
+scopes:
+  - scope: bulk-data|user/*.rs
+    description: >-
+      Documented Bulk Data (Flat FHIR) export scope granting read/search across all
+      resource types for the authorized user context. Verbatim from the OAuth docs.
+    flows: [clientCredentials]
+    sources: [https://docs.1up.health/docs/get-started/o-auth]
+scope_patterns:
+  - pattern: system/{ResourceType}.{permission}
+    description: Backend-service access to a FHIR resource type (client_credentials).
+    example: system/Patient.read
+  - pattern: user/{ResourceType}.{permission}
+    description: User-context access to a FHIR resource type.
+    example: user/*.rs
+  - pattern: patient/{ResourceType}.{permission}
+    description: Patient-context access limited to the launch/compartment patient.
+    example: patient/Observation.read
+  - pattern: launch / launch/patient / offline_access / openid / fhirUser
+    description: SMART launch and identity context scopes for user-facing app launch.
+permission_suffixes:
+  smart_v1: [read, write, '*']
+  smart_v2: [c, r, u, d, s, rs, cruds]

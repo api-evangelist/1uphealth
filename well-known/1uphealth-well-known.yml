@@ -1,0 +1,44 @@
+generated: '2026-07-24'
+method: probed
+source: live probes 2026-07-24
+notes: >-
+  1up advertises its FHIR discovery surface primarily through the live FHIR
+  CapabilityStatement (/fhir/{release}/metadata) and a SMART-on-FHIR configuration
+  document at /fhir/{release}/.well-known/smart-configuration (auth-gated). Generic
+  root /.well-known/* paths on the API host are fronted by a WAF and return 403/404
+  to anonymous clients; absence of a root security.txt is recorded honestly.
+hosts:
+  - host: https://api.1up.health
+    documents:
+      - path: /fhir/r4/.well-known/smart-configuration   # SMART App Launch discovery
+        status: 401
+        note: Exists but auth-gated (401); the SMART discovery surface for the R4 endpoint.
+      - path: /.well-known/smart-configuration
+        status: 403
+        note: WAF-fronted to anonymous clients.
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /openapi.json
+        status: 403
+        note: No OpenAPI; contract is FHIR CapabilityStatement.
+  - host: https://1up.health
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://docs.1up.health
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /llms.txt
+        status: 200
+        file: ../llms/1uphealth-llms.txt
+capability_statements:
+  - fhir/1uphealth-fhir-r4-capabilitystatement.json
+  - fhir/1uphealth-fhir-stu3-capabilitystatement.json
+  - fhir/1uphealth-fhir-dstu2-conformance.json

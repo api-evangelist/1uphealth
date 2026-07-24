@@ -1,0 +1,34 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  https://docs.1up.health/docs/dev-portal + https://docs.1up.health/docs/get-started/o-auth +
+  https://docs.1up.health/help-center/Content/en-US/get-started/cms-patient-access/test-apps-sandbox.html
+summary: >-
+  1up provides a sandbox / UAT environment with synthetic data for testing before
+  production. Clients register in the 1up Dev Portal and retrieve sandbox client_id /
+  client_secret from the Sandbox Clients section; production access requires identity
+  verification. Electronic Prior Authorization has dedicated demo (UAT) and production
+  environments.
+environments:
+  - name: sandbox / UAT
+    detail: Synthetic-data test environment provisioned via the Dev Portal.
+    dev_portal: https://developer.console.1up.health/1up-dev-portal
+  - name: production
+    detail: Requires identity verification from 1upHealth before enablement.
+credentials:
+  model: >-
+    Create a Client in the Dev Portal, choose access type, then copy client_id and
+    client_secret from the Sandbox Clients section. Patient Access demo uses a demo
+    health-plan auth application to obtain an authorization code.
+  never_hardcode: true
+token_endpoints:
+  epa_uat: https://gateway.1upcoreuat.com/auth/realms/epa-uat/protocol/openid-connect/token
+  epa_prod: https://gateway.1upcoreprod.com/auth/realms/epa-prod/protocol/openid-connect/token
+  provider_access_p2p: https://gateway.1up.health/auth/realms/dev-portal/protocol/openid-connect/token
+test_data:
+  synthetic: true
+  note: >-
+    Synthetic patients/members are used in sandbox. Sample FHIR data is published in the
+    first-party repo github.com/1uphealth/1upSampleData. No live PHI in sandbox.
+  sample_data_repo: https://github.com/1uphealth/1upSampleData
+postman: https://docs.1up.health/help-center/Content/en-US/get-started/quick-start/postman.html

@@ -1,0 +1,31 @@
+generated: '2026-07-24'
+method: searched
+source: >-
+  https://docs.1up.health/docs/release-notes + https://status.1up.health/ +
+  fhir/1uphealth-fhir-r4-capabilitystatement.json
+versioning:
+  scheme: fhir-release-in-path
+  detail: >-
+    The FHIR API is versioned by release in the URL path: /fhir/r4 (4.0.1),
+    /fhir/stu3 (3.0.2), /fhir/dstu2 (1.0.2). Legacy releases (DSTU2, STU3) remain
+    available for connected data sources, but the platform is actively migrating
+    connections from DSTU2 to R4 (see release notes 24.12).
+  current: r4
+  releases: [r4, stu3, dstu2]
+  console_scheme: calendar (YY.MM[.patch])
+  changelog: changelog/1uphealth-changelog.yml
+  changelog_url: https://docs.1up.health/docs/release-notes
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal machine-readable deprecation/sunset policy (RFC 8594) published. Legacy
+    FHIR release migration (DSTU2 -> R4) is communicated through the dated release notes.
+sla:
+  url: null
+  uptime_target: null
+  note: Enterprise/contracted SLAs; not published publicly.
+status_page: https://status.1up.health/
+resource_versioning:
+  scheme: versioned-update
+  detail: Resource-level version history via meta.versionId and the _history interaction.

@@ -209,6 +209,10 @@ apis:
   - type: Documentation
     url: https://docs.1up.health/docs/pop-connect
 common:
+- type: TrustCenter
+  url: security/1uphealth-trust-center.yml
+- type: DomainSecurity
+  url: security/1uphealth-domain-security.yml
 - type: Website
   url: https://1up.health/
 - type: DeveloperPortal
@@ -235,6 +239,42 @@ common:
   url: https://1up.health/terms-of-service/
 - type: PrivacyPolicy
   url: https://1up.health/privacy-policy/
+- type: APIReference
+  url: https://docs.1up.health/help-center/Content/en-US/api-references/rest-api-reference.html
+- type: GettingStarted
+  url: https://docs.1up.health/docs/get-started/faq
+- type: Postman
+  url: https://docs.1up.health/help-center/Content/en-US/get-started/quick-start/postman.html
+- type: Authentication
+  url: authentication/1uphealth-authentication.yml
+- type: OAuthScopes
+  url: scopes/1uphealth-scopes.yml
+- type: Conventions
+  url: conventions/1uphealth-conventions.yml
+- type: Idempotency
+  url: conventions/1uphealth-conventions.yml
+- type: Conformance
+  url: conformance/1uphealth-conformance.yml
+- type: Compliance
+  url: https://trust.1up.health/
+- type: ErrorCatalog
+  url: errors/1uphealth-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/1uphealth-lifecycle.yml
+- type: ChangeLog
+  url: changelog/1uphealth-changelog.yml
+- type: LLMsTxt
+  url: llms/1uphealth-llms.txt
+- type: MCPServer
+  url: mcp/1uphealth-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Sandbox
+  url: sandbox/1uphealth-sandbox.yml
+- type: Webhooks
+  url: asyncapi/1uphealth-subscription-webhooks.yml
+- type: WellKnown
+  url: well-known/1uphealth-well-known.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
