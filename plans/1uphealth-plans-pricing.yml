@@ -1,0 +1,97 @@
+name: 1upHealth API Plans and Pricing
+description: >
+  1upHealth offers enterprise health data interoperability solutions for payers, health plans,
+  and healthcare organizations. Pricing is customized based on the specific products selected,
+  number of member connections, data volume, and compliance requirements. Contact the 1upHealth
+  sales team for a tailored quote. Historical pricing has ranged from approximately $200-$450
+  per month per connection depending on scope and read vs. write access requirements.
+specificationVersion: '0.1'
+url: https://1up.health/
+plans:
+  - name: Patient Access API
+    description: >
+      FHIR-based Patient Access API for health plans to meet CMS Interoperability and Patient
+      Access Final Rule requirements. Enables patients to connect their health records to
+      third-party applications using SMART on FHIR and OAuth 2.0.
+    url: https://docs.1up.health/help-center/Content/en-US/get-started/cms-patient-access/developer-overview.html
+    pricing: Contact for pricing
+    pricingModel: custom
+    features:
+      - SMART on FHIR OAuth 2.0 authorization
+      - Full FHIR R4 patient data access
+      - Clinical and claims data
+      - HIPAA-compliant infrastructure
+      - CMS compliance reporting
+  - name: Provider Access API
+    description: >
+      FHIR Bulk Export API enabling in-network providers to receive member data from health
+      plans. Covers USCDI v1 data classes including clinical, claims, encounter, and prior
+      authorization data. Required for CMS compliance starting January 2027.
+    url: https://1up.health/products/1up-comply/1up-provider-access-api/
+    pricing: Contact for pricing
+    pricingModel: custom
+    features:
+      - FHIR Bulk Export (NDJSON)
+      - USCDI v1 data classes
+      - Claims data from January 1, 2016 onward
+      - Prior authorization data
+      - Provider attribution verification
+  - name: Payer-to-Payer Data Exchange API
+    description: >
+      FHIR Bulk Export API for payer-to-payer member data transfers during plan transitions.
+      Supports CMS Interoperability and Prior Authorization Final Rule requirements for
+      continuous member data portability.
+    url: https://docs.1up.health/help-center/Content/en-US/api-references/apis.html
+    pricing: Contact for pricing
+    pricingModel: custom
+    features:
+      - FHIR Bulk Export for payer transitions
+      - Clinical and claims data transfer
+      - CMS compliance support
+      - OAuth 2.0 client credentials
+  - name: Provider Directory API
+    description: >
+      FHIR-conformant Provider Directory API maintaining accurate network provider information
+      aligned with DaVinci PDEX Plan Net Implementation Guide for Medicare Advantage plans
+      and Federally-facilitated Exchanges.
+    url: https://1up.health/
+    pricing: Contact for pricing
+    pricingModel: custom
+    features:
+      - DaVinci PDEX Plan Net compliant
+      - Practitioner and organization data
+      - Network and location data
+      - Real-time directory updates
+  - name: Electronic Prior Authorization API
+    description: >
+      AI-powered electronic prior authorization solution integrating clinical data to
+      streamline ePA workflows. Supports CMS Interoperability and Prior Authorization Final
+      Rule compliance.
+    url: https://1up.health/
+    pricing: Contact for pricing
+    pricingModel: custom
+    features:
+      - FHIR-based ePA workflows
+      - AI-assisted clinical data integration
+      - CMS compliance support
+      - Real-time authorization status
+  - name: 1up Platform (Enterprise)
+    description: >
+      Full-platform enterprise license providing access to all 1upHealth products including
+      Patient Access, Provider Access, Payer-to-Payer, Provider Directory, Electronic Prior
+      Authorization, Formulary, and the core FHIR-first data platform. Includes dedicated
+      implementation support, SLA guarantees, and custom integrations.
+    url: https://1up.health/
+    pricing: Contact for pricing
+    pricingModel: custom
+    contact: https://1up.health/
+    phone: +1 (888)-344-7187
+    features:
+      - All API products included
+      - HIPAA-compliant infrastructure
+      - HITRUST r2 and SOC 2 Type II certified
+      - Dedicated implementation support
+      - Custom SLA agreements
+      - FHIR R4 full resource support
+      - JSON and XML data formats
+      - Bulk data export capability

@@ -1,0 +1,2471 @@
+# 1upHealth GraphQL Schema
+# FHIR R4 resources and 1upHealth platform types
+# Endpoint: https://api.1up.health/fhir/graphql
+
+# ---------------------------------------------------------------------------
+# Scalar types
+# ---------------------------------------------------------------------------
+
+scalar Date
+scalar DateTime
+scalar Decimal
+scalar URI
+scalar URL
+scalar Canonical
+scalar Code
+scalar ID
+scalar Instant
+scalar PositiveInt
+scalar UnsignedInt
+scalar Base64Binary
+scalar Markdown
+
+# ---------------------------------------------------------------------------
+# Shared FHIR backbone types
+# ---------------------------------------------------------------------------
+
+type Coding {
+  system: URI
+  version: String
+  code: Code
+  display: String
+  userSelected: Boolean
+}
+
+type CodeableConcept {
+  coding: [Coding]
+  text: String
+}
+
+type Quantity {
+  value: Decimal
+  comparator: Code
+  unit: String
+  system: URI
+  code: Code
+}
+
+type Range {
+  low: Quantity
+  high: Quantity
+}
+
+type Ratio {
+  numerator: Quantity
+  denominator: Quantity
+}
+
+type Period {
+  start: DateTime
+  end: DateTime
+}
+
+type Timing {
+  event: [DateTime]
+  repeat: TimingRepeat
+  code: CodeableConcept
+}
+
+type TimingRepeat {
+  boundsDuration: Quantity
+  count: PositiveInt
+  frequency: PositiveInt
+  period: Decimal
+  periodUnit: Code
+  dayOfWeek: [Code]
+  timeOfDay: [String]
+}
+
+type HumanName {
+  use: Code
+  text: String
+  family: String
+  given: [String]
+  prefix: [String]
+  suffix: [String]
+  period: Period
+}
+
+type Address {
+  use: Code
+  type: Code
+  text: String
+  line: [String]
+  city: String
+  district: String
+  state: String
+  postalCode: String
+  country: String
+  period: Period
+}
+
+type ContactPoint {
+  system: Code
+  value: String
+  use: Code
+  rank: PositiveInt
+  period: Period
+}
+
+type Identifier {
+  use: Code
+  type: CodeableConcept
+  system: URI
+  value: String
+  period: Period
+}
+
+type Reference {
+  reference: String
+  type: URI
+  identifier: Identifier
+  display: String
+}
+
+type Annotation {
+  authorReference: Reference
+  authorString: String
+  time: DateTime
+  text: Markdown
+}
+
+type Attachment {
+  contentType: Code
+  language: Code
+  data: Base64Binary
+  url: URL
+  size: UnsignedInt
+  hash: Base64Binary
+  title: String
+  creation: DateTime
+}
+
+type Meta {
+  versionId: ID
+  lastUpdated: Instant
+  source: URI
+  profile: [Canonical]
+  security: [Coding]
+  tag: [Coding]
+}
+
+type Narrative {
+  status: Code
+  div: String
+}
+
+type Extension {
+  url: URI
+  valueString: String
+  valueBoolean: Boolean
+  valueInteger: Int
+  valueDecimal: Decimal
+  valueDateTime: DateTime
+  valueCode: Code
+  valueCodeableConcept: CodeableConcept
+  valueReference: Reference
+  valueQuantity: Quantity
+}
+
+# ---------------------------------------------------------------------------
+# FHIR R4 Clinical Resources
+# ---------------------------------------------------------------------------
+
+type Patient {
+  id: ID!
+  meta: Meta
+  text: Narrative
+  extension: [Extension]
+  identifier: [Identifier]
+  active: Boolean
+  name: [HumanName]
+  telecom: [ContactPoint]
+  gender: Code
+  birthDate: Date
+  deceasedBoolean: Boolean
+  deceasedDateTime: DateTime
+  address: [Address]
+  maritalStatus: CodeableConcept
+  multipleBirthBoolean: Boolean
+  multipleBirthInteger: Int
+  photo: [Attachment]
+  contact: [PatientContact]
+  communication: [PatientCommunication]
+  generalPractitioner: [Reference]
+  managingOrganization: Reference
+  link: [PatientLink]
+}
+
+type PatientContact {
+  relationship: [CodeableConcept]
+  name: HumanName
+  telecom: [ContactPoint]
+  address: Address
+  gender: Code
+  organization: Reference
+  period: Period
+}
+
+type PatientCommunication {
+  language: CodeableConcept!
+  preferred: Boolean
+}
+
+type PatientLink {
+  other: Reference!
+  type: Code!
+}
+
+type Practitioner {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  active: Boolean
+  name: [HumanName]
+  telecom: [ContactPoint]
+  address: [Address]
+  gender: Code
+  birthDate: Date
+  photo: [Attachment]
+  qualification: [PractitionerQualification]
+  communication: [CodeableConcept]
+}
+
+type PractitionerQualification {
+  identifier: [Identifier]
+  code: CodeableConcept!
+  period: Period
+  issuer: Reference
+}
+
+type PractitionerRole {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  active: Boolean
+  period: Period
+  practitioner: Reference
+  organization: Reference
+  code: [CodeableConcept]
+  specialty: [CodeableConcept]
+  location: [Reference]
+  healthcareService: [Reference]
+  telecom: [ContactPoint]
+  availableTime: [PractitionerRoleAvailableTime]
+  notAvailable: [PractitionerRoleNotAvailable]
+}
+
+type PractitionerRoleAvailableTime {
+  daysOfWeek: [Code]
+  allDay: Boolean
+  availableStartTime: String
+  availableEndTime: String
+}
+
+type PractitionerRoleNotAvailable {
+  description: String!
+  during: Period
+}
+
+type Organization {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  active: Boolean
+  type: [CodeableConcept]
+  name: String
+  alias: [String]
+  telecom: [ContactPoint]
+  address: [Address]
+  partOf: Reference
+  contact: [OrganizationContact]
+  endpoint: [Reference]
+}
+
+type OrganizationContact {
+  purpose: CodeableConcept
+  name: HumanName
+  telecom: [ContactPoint]
+  address: Address
+}
+
+type Location {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code
+  name: String
+  alias: [String]
+  description: String
+  mode: Code
+  type: [CodeableConcept]
+  telecom: [ContactPoint]
+  address: Address
+  physicalType: CodeableConcept
+  managingOrganization: Reference
+  partOf: Reference
+}
+
+type Encounter {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  statusHistory: [EncounterStatusHistory]
+  class: Coding!
+  classHistory: [EncounterClassHistory]
+  type: [CodeableConcept]
+  serviceType: CodeableConcept
+  priority: CodeableConcept
+  subject: Reference
+  episodeOfCare: [Reference]
+  basedOn: [Reference]
+  participant: [EncounterParticipant]
+  appointment: [Reference]
+  period: Period
+  length: Quantity
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  diagnosis: [EncounterDiagnosis]
+  account: [Reference]
+  hospitalization: EncounterHospitalization
+  location: [EncounterLocation]
+  serviceProvider: Reference
+  partOf: Reference
+}
+
+type EncounterStatusHistory {
+  status: Code!
+  period: Period!
+}
+
+type EncounterClassHistory {
+  class: Coding!
+  period: Period!
+}
+
+type EncounterParticipant {
+  type: [CodeableConcept]
+  period: Period
+  individual: Reference
+}
+
+type EncounterDiagnosis {
+  condition: Reference!
+  use: CodeableConcept
+  rank: PositiveInt
+}
+
+type EncounterHospitalization {
+  preAdmissionIdentifier: Identifier
+  origin: Reference
+  admitSource: CodeableConcept
+  reAdmission: CodeableConcept
+  dietPreference: [CodeableConcept]
+  specialCourtesy: [CodeableConcept]
+  specialArrangement: [CodeableConcept]
+  destination: Reference
+  dischargeDisposition: CodeableConcept
+}
+
+type EncounterLocation {
+  location: Reference!
+  status: Code
+  physicalType: CodeableConcept
+  period: Period
+}
+
+type Condition {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  clinicalStatus: CodeableConcept
+  verificationStatus: CodeableConcept
+  category: [CodeableConcept]
+  severity: CodeableConcept
+  code: CodeableConcept
+  bodySite: [CodeableConcept]
+  subject: Reference!
+  encounter: Reference
+  onsetDateTime: DateTime
+  onsetAge: Quantity
+  onsetPeriod: Period
+  onsetRange: Range
+  onsetString: String
+  abatementDateTime: DateTime
+  abatementAge: Quantity
+  abatementPeriod: Period
+  abatementRange: Range
+  abatementString: String
+  recordedDate: DateTime
+  recorder: Reference
+  asserter: Reference
+  stage: [ConditionStage]
+  evidence: [ConditionEvidence]
+  note: [Annotation]
+}
+
+type ConditionStage {
+  summary: CodeableConcept
+  assessment: [Reference]
+  type: CodeableConcept
+}
+
+type ConditionEvidence {
+  code: [CodeableConcept]
+  detail: [Reference]
+}
+
+type Observation {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  basedOn: [Reference]
+  partOf: [Reference]
+  status: Code!
+  category: [CodeableConcept]
+  code: CodeableConcept!
+  subject: Reference
+  focus: [Reference]
+  encounter: Reference
+  effectiveDateTime: DateTime
+  effectivePeriod: Period
+  effectiveTiming: Timing
+  effectiveInstant: Instant
+  issued: Instant
+  performer: [Reference]
+  valueQuantity: Quantity
+  valueCodeableConcept: CodeableConcept
+  valueString: String
+  valueBoolean: Boolean
+  valueInteger: Int
+  valueRange: Range
+  valueRatio: Ratio
+  valueSampledData: String
+  valueTime: String
+  valueDateTime: DateTime
+  valuePeriod: Period
+  dataAbsentReason: CodeableConcept
+  interpretation: [CodeableConcept]
+  note: [Annotation]
+  bodySite: CodeableConcept
+  method: CodeableConcept
+  specimen: Reference
+  device: Reference
+  referenceRange: [ObservationReferenceRange]
+  hasMember: [Reference]
+  derivedFrom: [Reference]
+  component: [ObservationComponent]
+}
+
+type ObservationReferenceRange {
+  low: Quantity
+  high: Quantity
+  type: CodeableConcept
+  appliesTo: [CodeableConcept]
+  age: Range
+  text: String
+}
+
+type ObservationComponent {
+  code: CodeableConcept!
+  valueQuantity: Quantity
+  valueCodeableConcept: CodeableConcept
+  valueString: String
+  valueBoolean: Boolean
+  valueInteger: Int
+  valueRange: Range
+  valueRatio: Ratio
+  dataAbsentReason: CodeableConcept
+  interpretation: [CodeableConcept]
+  referenceRange: [ObservationReferenceRange]
+}
+
+type DiagnosticReport {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  basedOn: [Reference]
+  status: Code!
+  category: [CodeableConcept]
+  code: CodeableConcept!
+  subject: Reference
+  encounter: Reference
+  effectiveDateTime: DateTime
+  effectivePeriod: Period
+  issued: Instant
+  performer: [Reference]
+  resultsInterpreter: [Reference]
+  specimen: [Reference]
+  result: [Reference]
+  imagingStudy: [Reference]
+  media: [DiagnosticReportMedia]
+  conclusion: String
+  conclusionCode: [CodeableConcept]
+  presentedForm: [Attachment]
+}
+
+type DiagnosticReportMedia {
+  comment: String
+  link: Reference!
+}
+
+type Procedure {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  instantiatesCanonical: [Canonical]
+  basedOn: [Reference]
+  partOf: [Reference]
+  status: Code!
+  statusReason: CodeableConcept
+  category: CodeableConcept
+  code: CodeableConcept
+  subject: Reference!
+  encounter: Reference
+  performedDateTime: DateTime
+  performedPeriod: Period
+  performedString: String
+  performedAge: Quantity
+  performedRange: Range
+  recorder: Reference
+  asserter: Reference
+  performer: [ProcedurePerformer]
+  location: Reference
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  bodySite: [CodeableConcept]
+  outcome: CodeableConcept
+  report: [Reference]
+  complication: [CodeableConcept]
+  complicationDetail: [Reference]
+  followUp: [CodeableConcept]
+  note: [Annotation]
+  focalDevice: [ProcedureFocalDevice]
+  usedReference: [Reference]
+  usedCode: [CodeableConcept]
+}
+
+type ProcedurePerformer {
+  function: CodeableConcept
+  actor: Reference!
+  onBehalfOf: Reference
+}
+
+type ProcedureFocalDevice {
+  action: CodeableConcept
+  manipulated: Reference!
+}
+
+type MedicationRequest {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  statusReason: CodeableConcept
+  intent: Code!
+  category: [CodeableConcept]
+  priority: Code
+  doNotPerform: Boolean
+  reportedBoolean: Boolean
+  reportedReference: Reference
+  medicationCodeableConcept: CodeableConcept
+  medicationReference: Reference
+  subject: Reference!
+  encounter: Reference
+  supportingInformation: [Reference]
+  authoredOn: DateTime
+  requester: Reference
+  performer: Reference
+  performerType: CodeableConcept
+  recorder: Reference
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  instantiatesCanonical: [Canonical]
+  basedOn: [Reference]
+  groupIdentifier: Identifier
+  courseOfTherapyType: CodeableConcept
+  insurance: [Reference]
+  note: [Annotation]
+  dosageInstruction: [Dosage]
+  dispenseRequest: MedicationRequestDispenseRequest
+  substitution: MedicationRequestSubstitution
+  priorPrescription: Reference
+  detectedIssue: [Reference]
+  eventHistory: [Reference]
+}
+
+type Dosage {
+  sequence: Int
+  text: String
+  additionalInstruction: [CodeableConcept]
+  patientInstruction: String
+  timing: Timing
+  asNeededBoolean: Boolean
+  asNeededCodeableConcept: CodeableConcept
+  site: CodeableConcept
+  route: CodeableConcept
+  method: CodeableConcept
+  doseAndRate: [DosageDoseAndRate]
+  maxDosePerPeriod: Ratio
+  maxDosePerAdministration: Quantity
+  maxDosePerLifetime: Quantity
+}
+
+type DosageDoseAndRate {
+  type: CodeableConcept
+  doseRange: Range
+  doseQuantity: Quantity
+  rateRatio: Ratio
+  rateRange: Range
+  rateQuantity: Quantity
+}
+
+type MedicationRequestDispenseRequest {
+  initialFill: MedicationRequestInitialFill
+  dispenseInterval: Quantity
+  validityPeriod: Period
+  numberOfRepeatsAllowed: UnsignedInt
+  quantity: Quantity
+  expectedSupplyDuration: Quantity
+  performer: Reference
+}
+
+type MedicationRequestInitialFill {
+  quantity: Quantity
+  duration: Quantity
+}
+
+type MedicationRequestSubstitution {
+  allowedBoolean: Boolean
+  allowedCodeableConcept: CodeableConcept
+  reason: CodeableConcept
+}
+
+type Medication {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  code: CodeableConcept
+  status: Code
+  manufacturer: Reference
+  form: CodeableConcept
+  amount: Ratio
+  ingredient: [MedicationIngredient]
+  batch: MedicationBatch
+}
+
+type MedicationIngredient {
+  itemCodeableConcept: CodeableConcept
+  itemReference: Reference
+  isActive: Boolean
+  strength: Ratio
+}
+
+type MedicationBatch {
+  lotNumber: String
+  expirationDate: DateTime
+}
+
+type AllergyIntolerance {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  clinicalStatus: CodeableConcept
+  verificationStatus: CodeableConcept
+  type: Code
+  category: [Code]
+  criticality: Code
+  code: CodeableConcept
+  patient: Reference!
+  encounter: Reference
+  onsetDateTime: DateTime
+  onsetAge: Quantity
+  onsetPeriod: Period
+  onsetRange: Range
+  onsetString: String
+  recordedDate: DateTime
+  recorder: Reference
+  asserter: Reference
+  lastOccurrence: DateTime
+  note: [Annotation]
+  reaction: [AllergyIntoleranceReaction]
+}
+
+type AllergyIntoleranceReaction {
+  substance: CodeableConcept
+  manifestation: [CodeableConcept]!
+  description: String
+  onset: DateTime
+  severity: Code
+  exposureRoute: CodeableConcept
+  note: [Annotation]
+}
+
+type Immunization {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  statusReason: CodeableConcept
+  vaccineCode: CodeableConcept!
+  patient: Reference!
+  encounter: Reference
+  occurrenceDateTime: DateTime
+  occurrenceString: String
+  recorded: DateTime
+  primarySource: Boolean
+  reportOrigin: CodeableConcept
+  location: Reference
+  manufacturer: Reference
+  lotNumber: String
+  expirationDate: Date
+  site: CodeableConcept
+  route: CodeableConcept
+  doseQuantity: Quantity
+  performer: [ImmunizationPerformer]
+  note: [Annotation]
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  isSubpotent: Boolean
+  subpotentReason: [CodeableConcept]
+  education: [ImmunizationEducation]
+  programEligibility: [CodeableConcept]
+  fundingSource: CodeableConcept
+  reaction: [ImmunizationReaction]
+  protocolApplied: [ImmunizationProtocolApplied]
+}
+
+type ImmunizationPerformer {
+  function: CodeableConcept
+  actor: Reference!
+}
+
+type ImmunizationEducation {
+  documentType: String
+  reference: URI
+  publicationDate: DateTime
+  presentationDate: DateTime
+}
+
+type ImmunizationReaction {
+  date: DateTime
+  detail: Reference
+  reported: Boolean
+}
+
+type ImmunizationProtocolApplied {
+  series: String
+  authority: Reference
+  targetDisease: [CodeableConcept]
+  doseNumberPositiveInt: PositiveInt
+  doseNumberString: String
+  seriesDosesPositiveInt: PositiveInt
+  seriesDosesString: String
+}
+
+type CarePlan {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  instantiatesCanonical: [Canonical]
+  basedOn: [Reference]
+  replaces: [Reference]
+  partOf: [Reference]
+  status: Code!
+  intent: Code!
+  category: [CodeableConcept]
+  title: String
+  description: String
+  subject: Reference!
+  encounter: Reference
+  period: Period
+  created: DateTime
+  author: Reference
+  contributor: [Reference]
+  careTeam: [Reference]
+  addresses: [Reference]
+  supportingInfo: [Reference]
+  goal: [Reference]
+  activity: [CarePlanActivity]
+  note: [Annotation]
+}
+
+type CarePlanActivity {
+  outcomeCodeableConcept: [CodeableConcept]
+  outcomeReference: [Reference]
+  progress: [Annotation]
+  reference: Reference
+  detail: CarePlanActivityDetail
+}
+
+type CarePlanActivityDetail {
+  kind: Code
+  instantiatesCanonical: [Canonical]
+  code: CodeableConcept
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  goal: [Reference]
+  status: Code!
+  statusReason: CodeableConcept
+  doNotPerform: Boolean
+  scheduledTiming: Timing
+  scheduledPeriod: Period
+  scheduledString: String
+  location: Reference
+  performer: [Reference]
+  productCodeableConcept: CodeableConcept
+  productReference: Reference
+  dailyAmount: Quantity
+  quantity: Quantity
+  description: String
+}
+
+type CareTeam {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code
+  category: [CodeableConcept]
+  name: String
+  subject: Reference
+  encounter: Reference
+  period: Period
+  participant: [CareTeamParticipant]
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  managingOrganization: [Reference]
+  telecom: [ContactPoint]
+  note: [Annotation]
+}
+
+type CareTeamParticipant {
+  role: [CodeableConcept]
+  member: Reference
+  onBehalfOf: Reference
+  period: Period
+}
+
+type Goal {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  lifecycleStatus: Code!
+  achievementStatus: CodeableConcept
+  category: [CodeableConcept]
+  priority: CodeableConcept
+  description: CodeableConcept!
+  subject: Reference!
+  startDate: Date
+  startCodeableConcept: CodeableConcept
+  target: [GoalTarget]
+  statusDate: Date
+  statusReason: String
+  expressedBy: Reference
+  addresses: [Reference]
+  note: [Annotation]
+  outcomeCode: [CodeableConcept]
+  outcomeReference: [Reference]
+}
+
+type GoalTarget {
+  measure: CodeableConcept
+  detailQuantity: Quantity
+  detailRange: Range
+  detailCodeableConcept: CodeableConcept
+  detailString: String
+  detailBoolean: Boolean
+  detailInteger: Int
+  dueDate: Date
+  dueDuration: Quantity
+}
+
+type ServiceRequest {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  instantiatesCanonical: [Canonical]
+  basedOn: [Reference]
+  replaces: [Reference]
+  requisition: Identifier
+  status: Code!
+  intent: Code!
+  category: [CodeableConcept]
+  priority: Code
+  doNotPerform: Boolean
+  code: CodeableConcept
+  orderDetail: [CodeableConcept]
+  quantityQuantity: Quantity
+  quantityRatio: Ratio
+  quantityRange: Range
+  subject: Reference!
+  encounter: Reference
+  occurrenceDateTime: DateTime
+  occurrencePeriod: Period
+  occurrenceTiming: Timing
+  asNeededBoolean: Boolean
+  asNeededCodeableConcept: CodeableConcept
+  authoredOn: DateTime
+  requester: Reference
+  performerType: CodeableConcept
+  performer: [Reference]
+  locationCode: [CodeableConcept]
+  locationReference: [Reference]
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  insurance: [Reference]
+  supportingInfo: [Reference]
+  specimen: [Reference]
+  bodySite: [CodeableConcept]
+  note: [Annotation]
+  patientInstruction: String
+  relevantHistory: [Reference]
+}
+
+type Appointment {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  cancelationReason: CodeableConcept
+  serviceCategory: [CodeableConcept]
+  serviceType: [CodeableConcept]
+  specialty: [CodeableConcept]
+  appointmentType: CodeableConcept
+  reasonCode: [CodeableConcept]
+  reasonReference: [Reference]
+  priority: UnsignedInt
+  description: String
+  supportingInformation: [Reference]
+  start: Instant
+  end: Instant
+  minutesDuration: PositiveInt
+  slot: [Reference]
+  created: DateTime
+  comment: String
+  basedOn: [Reference]
+  participant: [AppointmentParticipant]!
+  requestedPeriod: [Period]
+}
+
+type AppointmentParticipant {
+  type: [CodeableConcept]
+  actor: Reference
+  required: Code
+  status: Code!
+  period: Period
+}
+
+type DocumentReference {
+  id: ID!
+  meta: Meta
+  masterIdentifier: Identifier
+  identifier: [Identifier]
+  status: Code!
+  docStatus: Code
+  type: CodeableConcept
+  category: [CodeableConcept]
+  subject: Reference
+  date: Instant
+  author: [Reference]
+  authenticator: Reference
+  custodian: Reference
+  relatesTo: [DocumentReferenceRelatesTo]
+  description: String
+  securityLabel: [CodeableConcept]
+  content: [DocumentReferenceContent]!
+  context: DocumentReferenceContext
+}
+
+type DocumentReferenceRelatesTo {
+  code: Code!
+  target: Reference!
+}
+
+type DocumentReferenceContent {
+  attachment: Attachment!
+  format: Coding
+}
+
+type DocumentReferenceContext {
+  encounter: [Reference]
+  event: [CodeableConcept]
+  period: Period
+  facilityType: CodeableConcept
+  practiceSetting: CodeableConcept
+  sourcePatientInfo: Reference
+  related: [Reference]
+}
+
+type Device {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  definition: Reference
+  udiCarrier: [DeviceUdiCarrier]
+  status: Code
+  statusReason: [CodeableConcept]
+  distinctIdentifier: String
+  manufacturer: String
+  manufactureDate: DateTime
+  expirationDate: DateTime
+  lotNumber: String
+  serialNumber: String
+  deviceName: [DeviceName]
+  modelNumber: String
+  partNumber: String
+  type: CodeableConcept
+  specialization: [DeviceSpecialization]
+  version: [DeviceVersion]
+  property: [DeviceProperty]
+  patient: Reference
+  owner: Reference
+  contact: [ContactPoint]
+  location: Reference
+  url: URI
+  note: [Annotation]
+  safety: [CodeableConcept]
+  parent: Reference
+}
+
+type DeviceUdiCarrier {
+  deviceIdentifier: String
+  issuer: URI
+  jurisdiction: URI
+  carrierAIDC: Base64Binary
+  carrierHRF: String
+  entryType: Code
+}
+
+type DeviceName {
+  name: String!
+  type: Code!
+}
+
+type DeviceSpecialization {
+  systemType: CodeableConcept!
+  version: String
+}
+
+type DeviceVersion {
+  type: CodeableConcept
+  component: Identifier
+  value: String!
+}
+
+type DeviceProperty {
+  type: CodeableConcept!
+  valueQuantity: [Quantity]
+  valueCode: [CodeableConcept]
+}
+
+# ---------------------------------------------------------------------------
+# FHIR Financial / Claims Resources
+# ---------------------------------------------------------------------------
+
+type Coverage {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  type: CodeableConcept
+  policyHolder: Reference
+  subscriber: Reference
+  subscriberId: String
+  beneficiary: Reference!
+  dependent: String
+  relationship: CodeableConcept
+  period: Period
+  payor: [Reference]!
+  class: [CoverageClass]
+  order: PositiveInt
+  network: String
+  costToBeneficiary: [CoverageCostToBeneficiary]
+  subrogation: Boolean
+  contract: [Reference]
+}
+
+type CoverageClass {
+  type: CodeableConcept!
+  value: String!
+  name: String
+}
+
+type CoverageCostToBeneficiary {
+  type: CodeableConcept
+  valueQuantity: Quantity
+  valueMoney: Money
+  exception: [CoverageException]
+}
+
+type CoverageException {
+  type: CodeableConcept!
+  period: Period
+}
+
+type Money {
+  value: Decimal
+  currency: Code
+}
+
+type Claim {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  type: CodeableConcept!
+  subType: CodeableConcept
+  use: Code!
+  patient: Reference!
+  billablePeriod: Period
+  created: DateTime!
+  enterer: Reference
+  insurer: Reference
+  provider: Reference!
+  priority: CodeableConcept!
+  fundsReserve: CodeableConcept
+  related: [ClaimRelated]
+  prescription: Reference
+  originalPrescription: Reference
+  payee: ClaimPayee
+  referral: Reference
+  facility: Reference
+  careTeam: [ClaimCareTeam]
+  supportingInfo: [ClaimSupportingInfo]
+  diagnosis: [ClaimDiagnosis]
+  procedure: [ClaimProcedure]
+  insurance: [ClaimInsurance]!
+  accident: ClaimAccident
+  item: [ClaimItem]
+  total: Money
+}
+
+type ClaimRelated {
+  claim: Reference
+  relationship: CodeableConcept
+  reference: Identifier
+}
+
+type ClaimPayee {
+  type: CodeableConcept!
+  party: Reference
+}
+
+type ClaimCareTeam {
+  sequence: PositiveInt!
+  provider: Reference!
+  responsible: Boolean
+  role: CodeableConcept
+  qualification: CodeableConcept
+}
+
+type ClaimSupportingInfo {
+  sequence: PositiveInt!
+  category: CodeableConcept!
+  code: CodeableConcept
+  timingDate: Date
+  timingPeriod: Period
+  valueBoolean: Boolean
+  valueString: String
+  valueQuantity: Quantity
+  valueAttachment: Attachment
+  valueReference: Reference
+  reason: CodeableConcept
+}
+
+type ClaimDiagnosis {
+  sequence: PositiveInt!
+  diagnosisCodeableConcept: CodeableConcept
+  diagnosisReference: Reference
+  type: [CodeableConcept]
+  onAdmission: CodeableConcept
+  packageCode: CodeableConcept
+}
+
+type ClaimProcedure {
+  sequence: PositiveInt!
+  type: [CodeableConcept]
+  date: DateTime
+  procedureCodeableConcept: CodeableConcept
+  procedureReference: Reference
+  udi: [Reference]
+}
+
+type ClaimInsurance {
+  sequence: PositiveInt!
+  focal: Boolean!
+  identifier: Identifier
+  coverage: Reference!
+  businessArrangement: String
+  preAuthRef: [String]
+  claimResponse: Reference
+}
+
+type ClaimAccident {
+  date: Date!
+  type: CodeableConcept
+  locationAddress: Address
+  locationReference: Reference
+}
+
+type ClaimItem {
+  sequence: PositiveInt!
+  careTeamSequence: [PositiveInt]
+  diagnosisSequence: [PositiveInt]
+  procedureSequence: [PositiveInt]
+  informationSequence: [PositiveInt]
+  revenue: CodeableConcept
+  category: CodeableConcept
+  productOrService: CodeableConcept!
+  modifier: [CodeableConcept]
+  programCode: [CodeableConcept]
+  servicedDate: Date
+  servicedPeriod: Period
+  locationCodeableConcept: CodeableConcept
+  locationAddress: Address
+  locationReference: Reference
+  quantity: Quantity
+  unitPrice: Money
+  factor: Decimal
+  net: Money
+  udi: [Reference]
+  bodySite: CodeableConcept
+  subSite: [CodeableConcept]
+  encounter: [Reference]
+  detail: [ClaimItemDetail]
+}
+
+type ClaimItemDetail {
+  sequence: PositiveInt!
+  revenue: CodeableConcept
+  category: CodeableConcept
+  productOrService: CodeableConcept!
+  modifier: [CodeableConcept]
+  programCode: [CodeableConcept]
+  quantity: Quantity
+  unitPrice: Money
+  factor: Decimal
+  net: Money
+  udi: [Reference]
+}
+
+type ExplanationOfBenefit {
+  id: ID!
+  meta: Meta
+  identifier: [Identifier]
+  status: Code!
+  type: CodeableConcept!
+  subType: CodeableConcept
+  use: Code!
+  patient: Reference!
+  billablePeriod: Period
+  created: DateTime!
+  enterer: Reference
+  insurer: Reference!
+  provider: Reference!
+  priority: CodeableConcept
+  fundsReserveRequested: CodeableConcept
+  fundsReserve: CodeableConcept
+  related: [EOBRelated]
+  prescription: Reference
+  originalPrescription: Reference
+  payee: EOBPayee
+  referral: Reference
+  facility: Reference
+  claim: Reference
+  claimResponse: Reference
+  outcome: Code!
+  disposition: String
+  preAuthRef: [String]
+  preAuthRefPeriod: [Period]
+  careTeam: [EOBCareTeam]
+  supportingInfo: [EOBSupportingInfo]
+  diagnosis: [EOBDiagnosis]
+  procedure: [EOBProcedure]
+  precedence: PositiveInt
+  insurance: [EOBInsurance]!
+  accident: EOBAccident
+  item: [EOBItem]
+  addItem: [EOBAddItem]
+  adjudication: [EOBAdjudication]
+  total: [EOBTotal]
+  payment: EOBPayment
+  formCode: CodeableConcept
+  form: Attachment
+  processNote: [EOBProcessNote]
+  benefitPeriod: Period
+  benefitBalance: [EOBBenefitBalance]
+}
+
+type EOBRelated {
+  claim: Reference
+  relationship: CodeableConcept
+  reference: Identifier
+}
+
+type EOBPayee {
+  type: CodeableConcept
+  party: Reference
+}
+
+type EOBCareTeam {
+  sequence: PositiveInt!
+  provider: Reference!
+  responsible: Boolean
+  role: CodeableConcept
+  qualification: CodeableConcept
+}
+
+type EOBSupportingInfo {
+  sequence: PositiveInt!
+  category: CodeableConcept!
+  code: CodeableConcept
+  timingDate: Date
+  timingPeriod: Period
+  valueBoolean: Boolean
+  valueString: String
+  valueQuantity: Quantity
+  valueAttachment: Attachment
+  valueReference: Reference
+  reason: CodeableConcept
+}
+
+type EOBDiagnosis {
+  sequence: PositiveInt!
+  diagnosisCodeableConcept: CodeableConcept
+  diagnosisReference: Reference
+  type: [CodeableConcept]
+  onAdmission: CodeableConcept
+  packageCode: CodeableConcept
+}
+
+type EOBProcedure {
+  sequence: PositiveInt!
+  type: [CodeableConcept]
+  date: DateTime
+  procedureCodeableConcept: CodeableConcept
+  procedureReference: Reference
+  udi: [Reference]
+}
+
+type EOBInsurance {
+  focal: Boolean!
+  coverage: Reference!
+  preAuthRef: [String]
+}
+
+type EOBAccident {
+  date: Date
+  type: CodeableConcept
+  locationAddress: Address
+  locationReference: Reference
+}
+
+type EOBItem {
+  sequence: PositiveInt!
+  careTeamSequence: [PositiveInt]
+  diagnosisSequence: [PositiveInt]
+  procedureSequence: [PositiveInt]
+  informationSequence: [PositiveInt]
+  revenue: CodeableConcept
+  category: CodeableConcept
+  productOrService: CodeableConcept!
+  modifier: [CodeableConcept]
+  programCode: [CodeableConcept]
+  servicedDate: Date
+  servicedPeriod: Period
+  locationCodeableConcept: CodeableConcept
+  locationAddress: Address
+  locationReference: Reference
+  quantity: Quantity
+  unitPrice: Money
+  factor: Decimal
+  net: Money
+  udi: [Reference]
+  bodySite: CodeableConcept
+  subSite: [CodeableConcept]
+  encounter: [Reference]
+  noteNumber: [PositiveInt]
+  adjudication: [EOBAdjudication]
+  detail: [EOBItemDetail]
+}
+
+type EOBItemDetail {
+  sequence: PositiveInt!
+  revenue: CodeableConcept
+  category: CodeableConcept
+  productOrService: CodeableConcept!
+  modifier: [CodeableConcept]
+  programCode: [CodeableConcept]
+  quantity: Quantity
+  unitPrice: Money
+  factor: Decimal
+  net: Money
+  udi: [Reference]
+  noteNumber: [PositiveInt]
+  adjudication: [EOBAdjudication]
+}
+
+type EOBAdjudication {
+  category: CodeableConcept!
+  reason: CodeableConcept
+  amount: Money
+  value: Decimal
+}
+
+type EOBAddItem {
+  itemSequence: [PositiveInt]
+  detailSequence: [PositiveInt]
+  subDetailSequence: [PositiveInt]
+  provider: [Reference]
+  productOrService: CodeableConcept!
+  modifier: [CodeableConcept]
+  programCode: [CodeableConcept]
+  servicedDate: Date
+  servicedPeriod: Period
+  locationCodeableConcept: CodeableConcept
+  locationAddress: Address
+  locationReference: Reference
+  quantity: Quantity
+  unitPrice: Money
+  factor: Decimal
+  net: Money
+  bodySite: CodeableConcept
+  subSite: [CodeableConcept]
+  noteNumber: [PositiveInt]
+  adjudication: [EOBAdjudication]
+}
+
+type EOBTotal {
+  category: CodeableConcept!
+  amount: Money!
+}
+
+type EOBPayment {
+  type: CodeableConcept
+  adjustment: Money
+  adjustmentReason: CodeableConcept
+  date: Date
+  amount: Money
+  identifier: Identifier
+}
+
+type EOBProcessNote {
+  number: PositiveInt
+  type: Code
+  text: String
+  language: CodeableConcept
+}
+
+type EOBBenefitBalance {
+  category: CodeableConcept!
+  excluded: Boolean
+  name: String
+  description: String
+  network: CodeableConcept
+  unit: CodeableConcept
+  term: CodeableConcept
+  financial: [EOBBenefitBalanceFinancial]
+}
+
+type EOBBenefitBalanceFinancial {
+  type: CodeableConcept!
+  allowedUnsignedInt: UnsignedInt
+  allowedString: String
+  allowedMoney: Money
+  usedUnsignedInt: UnsignedInt
+  usedMoney: Money
+}
+
+# ---------------------------------------------------------------------------
+# FHIR Infrastructure Resources
+# ---------------------------------------------------------------------------
+
+type AuditEvent {
+  id: ID!
+  meta: Meta
+  type: Coding!
+  subtype: [Coding]
+  action: Code
+  period: Period
+  recorded: Instant!
+  outcome: Code
+  outcomeDesc: String
+  purposeOfEvent: [CodeableConcept]
+  agent: [AuditEventAgent]!
+  source: AuditEventSource!
+  entity: [AuditEventEntity]
+}
+
+type AuditEventAgent {
+  type: CodeableConcept
+  role: [CodeableConcept]
+  who: Reference
+  altId: String
+  name: String
+  requestor: Boolean!
+  location: Reference
+  policy: [URI]
+  media: Coding
+  network: AuditEventAgentNetwork
+  purposeOfUse: [CodeableConcept]
+}
+
+type AuditEventAgentNetwork {
+  address: String
+  type: Code
+}
+
+type AuditEventSource {
+  site: String
+  observer: Reference!
+  type: [Coding]
+}
+
+type AuditEventEntity {
+  what: Reference
+  type: Coding
+  role: Coding
+  lifecycle: Coding
+  securityLabel: [Coding]
+  name: String
+  description: String
+  query: Base64Binary
+  detail: [AuditEventEntityDetail]
+}
+
+type AuditEventEntityDetail {
+  type: String!
+  valueString: String
+  valueBase64Binary: Base64Binary
+}
+
+type Subscription {
+  id: ID!
+  meta: Meta
+  status: Code!
+  contact: [ContactPoint]
+  end: Instant
+  reason: String!
+  criteria: String!
+  error: String
+  channel: SubscriptionChannel!
+}
+
+type SubscriptionChannel {
+  type: Code!
+  endpoint: URL
+  payload: Code
+  header: [String]
+}
+
+type FHIRBundle {
+  id: ID
+  meta: Meta
+  type: Code!
+  timestamp: Instant
+  total: UnsignedInt
+  link: [BundleLink]
+  entry: [BundleEntry]
+}
+
+type BundleLink {
+  relation: String!
+  url: URI!
+}
+
+type BundleEntry {
+  id: String
+  link: [BundleLink]
+  fullUrl: URI
+  resource: FHIRResource
+  search: BundleEntrySearch
+  request: BundleEntryRequest
+  response: BundleEntryResponse
+}
+
+type BundleEntrySearch {
+  mode: Code
+  score: Decimal
+}
+
+type BundleEntryRequest {
+  method: Code!
+  url: URI!
+  ifNoneMatch: String
+  ifModifiedSince: Instant
+  ifMatch: String
+  ifNoneExist: String
+}
+
+type BundleEntryResponse {
+  status: String!
+  location: URI
+  etag: String
+  lastModified: Instant
+}
+
+type FHIRResource {
+  id: ID
+  resourceType: String
+  meta: Meta
+}
+
+type FHIRCapabilityStatement {
+  id: ID!
+  meta: Meta
+  url: URI
+  version: String
+  name: String
+  title: String
+  status: Code!
+  experimental: Boolean
+  date: DateTime!
+  publisher: String
+  description: Markdown
+  purpose: Markdown
+  copyright: Markdown
+  kind: Code!
+  fhirVersion: Code!
+  format: [Code]!
+  rest: [CapabilityStatementRest]
+}
+
+type CapabilityStatementRest {
+  mode: Code!
+  documentation: Markdown
+  security: CapabilityStatementSecurity
+  resource: [CapabilityStatementResource]
+  interaction: [CapabilityStatementInteraction]
+}
+
+type CapabilityStatementSecurity {
+  cors: Boolean
+  service: [CodeableConcept]
+  description: Markdown
+}
+
+type CapabilityStatementResource {
+  type: Code!
+  profile: Canonical
+  supportedProfile: [Canonical]
+  documentation: Markdown
+  interaction: [CapabilityStatementInteraction]
+  versioning: Code
+  readHistory: Boolean
+  updateCreate: Boolean
+  conditionalCreate: Boolean
+  conditionalRead: Code
+  conditionalUpdate: Boolean
+  conditionalDelete: Code
+  searchParam: [CapabilityStatementSearchParam]
+}
+
+type CapabilityStatementInteraction {
+  code: Code!
+  documentation: Markdown
+}
+
+type CapabilityStatementSearchParam {
+  name: String!
+  definition: Canonical
+  type: Code!
+  documentation: Markdown
+}
+
+# ---------------------------------------------------------------------------
+# 1upHealth Platform-Specific Types
+# ---------------------------------------------------------------------------
+
+type HealthRecord {
+  id: ID!
+  patientId: ID!
+  sourceId: ID!
+  resourceType: String!
+  resourceId: String!
+  fhirVersion: String
+  data: FHIRResource
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  syncJobId: ID
+}
+
+type HealthDataSource {
+  id: ID!
+  name: String!
+  displayName: String
+  description: String
+  logoUrl: URL
+  category: String
+  fhirBaseUrl: URL
+  fhirVersion: String
+  supportsBulkExport: Boolean
+  supportsSmartOnFhir: Boolean
+  authType: String
+  status: String
+  lastChecked: DateTime
+  payerConnections: [PayerConnection]
+}
+
+type PatientConnection {
+  id: ID!
+  userId: ID!
+  sourceId: ID!
+  source: HealthDataSource
+  status: String!
+  patientResourceId: String
+  lastSyncAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  syncJobs: [SyncJob]
+  scopes: [String]
+}
+
+type ConsentRecord {
+  id: ID!
+  patientId: ID!
+  sourceId: ID
+  purpose: String
+  status: String!
+  grantedAt: DateTime
+  revokedAt: DateTime
+  expiresAt: DateTime
+  scope: [String]
+  actor: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type DataExchange {
+  id: ID!
+  exchangeType: String!
+  sourceOrganizationId: ID
+  targetOrganizationId: ID
+  patientId: ID
+  status: String!
+  initiatedAt: DateTime!
+  completedAt: DateTime
+  resourceTypes: [String]
+  bundleId: String
+  errorMessage: String
+  auditTrail: [AuditEvent]
+}
+
+type SyncJob {
+  id: ID!
+  connectionId: ID!
+  status: SyncJobStatus!
+  startTime: DateTime!
+  endTime: DateTime
+  resourcesProcessed: Int
+  resourcesCreated: Int
+  resourcesUpdated: Int
+  resourcesFailed: Int
+  errors: [SyncError]
+  triggeredBy: String
+  fhirVersion: String
+  requestedResourceTypes: [String]
+}
+
+enum SyncJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PARTIAL
+}
+
+type SyncStatus {
+  id: ID!
+  connectionId: ID!
+  overallStatus: String!
+  lastSuccessfulSync: DateTime
+  lastAttemptedSync: DateTime
+  nextScheduledSync: DateTime
+  totalSyncs: Int
+  successfulSyncs: Int
+  failedSyncs: Int
+  recentJobs: [SyncJob]
+}
+
+type SyncError {
+  code: String!
+  message: String!
+  resourceType: String
+  resourceId: String
+  timestamp: DateTime
+}
+
+type User {
+  id: ID!
+  externalId: String
+  email: String
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  dateOfBirth: Date
+  gender: String
+  address: Address
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  apps: [App]
+  connections: [PatientConnection]
+  consents: [ConsentRecord]
+}
+
+type App {
+  id: ID!
+  clientId: String!
+  name: String!
+  description: String
+  logoUrl: URL
+  homepageUrl: URL
+  privacyPolicyUrl: URL
+  termsOfServiceUrl: URL
+  redirectUris: [String]
+  scopes: [String]
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  owner: Organization
+}
+
+type OAuthToken {
+  id: ID!
+  userId: ID!
+  appId: ID!
+  accessToken: String
+  tokenType: String
+  expiresAt: DateTime
+  scopes: [String]
+  createdAt: DateTime!
+  lastUsedAt: DateTime
+}
+
+type Payer {
+  id: ID!
+  name: String!
+  displayName: String
+  logoUrl: URL
+  cmsPlanId: String
+  state: String
+  fhirEndpoint: URL
+  supportsPatientAccess: Boolean
+  supportsProviderAccess: Boolean
+  supportsPayerToPayerExchange: Boolean
+  status: String!
+  lastVerified: DateTime
+}
+
+type PayerConnection {
+  id: ID!
+  userId: ID!
+  payerId: ID!
+  payer: Payer
+  status: String!
+  memberId: String
+  groupId: String
+  planName: String
+  effectiveDate: Date
+  terminationDate: Date
+  lastSyncAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type WebhookEvent {
+  id: ID!
+  eventType: String!
+  resourceType: String
+  resourceId: String
+  userId: ID
+  connectionId: ID
+  payload: String
+  deliveryStatus: String
+  deliveryAttempts: Int
+  lastDeliveryAt: DateTime
+  createdAt: DateTime!
+}
+
+# ---------------------------------------------------------------------------
+# Query root
+# ---------------------------------------------------------------------------
+
+type Query {
+  # Patient
+  patient(id: ID!): Patient
+  patientList(
+    _id: [ID]
+    identifier: String
+    family: String
+    given: String
+    birthdate: Date
+    gender: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Practitioner
+  practitioner(id: ID!): Practitioner
+  practitionerList(
+    _id: [ID]
+    identifier: String
+    name: String
+    specialty: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # PractitionerRole
+  practitionerRole(id: ID!): PractitionerRole
+  practitionerRoleList(
+    practitioner: String
+    organization: String
+    specialty: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Organization
+  organization(id: ID!): Organization
+  organizationList(
+    name: String
+    type: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Location
+  location(id: ID!): Location
+  locationList(
+    name: String
+    organization: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Encounter
+  encounter(id: ID!): Encounter
+  encounterList(
+    patient: String
+    status: Code
+    type: String
+    date: DateTime
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Condition
+  condition(id: ID!): Condition
+  conditionList(
+    patient: String
+    clinicalStatus: Code
+    category: String
+    code: String
+    onset_date: DateTime
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Observation
+  observation(id: ID!): Observation
+  observationList(
+    patient: String
+    category: String
+    code: String
+    date: DateTime
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # DiagnosticReport
+  diagnosticReport(id: ID!): DiagnosticReport
+  diagnosticReportList(
+    patient: String
+    category: String
+    code: String
+    date: DateTime
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Procedure
+  procedure(id: ID!): Procedure
+  procedureList(
+    patient: String
+    status: Code
+    date: DateTime
+    code: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # MedicationRequest
+  medicationRequest(id: ID!): MedicationRequest
+  medicationRequestList(
+    patient: String
+    status: Code
+    intent: Code
+    authoredon: DateTime
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Medication
+  medication(id: ID!): Medication
+  medicationList(
+    code: String
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # AllergyIntolerance
+  allergyIntolerance(id: ID!): AllergyIntolerance
+  allergyIntoleranceList(
+    patient: String
+    clinicalStatus: Code
+    category: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Immunization
+  immunization(id: ID!): Immunization
+  immunizationList(
+    patient: String
+    status: Code
+    date: DateTime
+    vaccineCode: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # CarePlan
+  carePlan(id: ID!): CarePlan
+  carePlanList(
+    patient: String
+    status: Code
+    category: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # CareTeam
+  careTeam(id: ID!): CareTeam
+  careTeamList(
+    patient: String
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Goal
+  goal(id: ID!): Goal
+  goalList(
+    patient: String
+    lifecycleStatus: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # ServiceRequest
+  serviceRequest(id: ID!): ServiceRequest
+  serviceRequestList(
+    patient: String
+    status: Code
+    intent: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Appointment
+  appointment(id: ID!): Appointment
+  appointmentList(
+    patient: String
+    status: Code
+    date: DateTime
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # DocumentReference
+  documentReference(id: ID!): DocumentReference
+  documentReferenceList(
+    patient: String
+    type: String
+    category: String
+    date: DateTime
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Device
+  device(id: ID!): Device
+  deviceList(
+    patient: String
+    type: String
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Coverage
+  coverage(id: ID!): Coverage
+  coverageList(
+    patient: String
+    status: Code
+    beneficiary: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Claim
+  claim(id: ID!): Claim
+  claimList(
+    patient: String
+    status: Code
+    use: Code
+    created: DateTime
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # ExplanationOfBenefit
+  explanationOfBenefit(id: ID!): ExplanationOfBenefit
+  explanationOfBenefitList(
+    patient: String
+    status: Code
+    created: DateTime
+    type: String
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # AuditEvent
+  auditEvent(id: ID!): AuditEvent
+  auditEventList(
+    patient: String
+    agent: String
+    date: DateTime
+    action: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # Subscription
+  subscription(id: ID!): Subscription
+  subscriptionList(
+    status: Code
+    _count: Int
+    _page_token: String
+  ): FHIRBundle
+
+  # FHIRCapabilityStatement
+  capabilityStatement: FHIRCapabilityStatement
+
+  # 1upHealth Platform queries
+  healthRecord(id: ID!): HealthRecord
+  healthRecordList(
+    patientId: ID
+    sourceId: ID
+    resourceType: String
+    _count: Int
+    _page_token: String
+  ): [HealthRecord]
+
+  healthDataSource(id: ID!): HealthDataSource
+  healthDataSourceList(
+    category: String
+    status: String
+    _count: Int
+  ): [HealthDataSource]
+
+  patientConnection(id: ID!): PatientConnection
+  patientConnectionList(
+    userId: ID
+    sourceId: ID
+    status: String
+  ): [PatientConnection]
+
+  consentRecord(id: ID!): ConsentRecord
+  consentRecordList(
+    patientId: ID
+    sourceId: ID
+    status: String
+  ): [ConsentRecord]
+
+  dataExchange(id: ID!): DataExchange
+  dataExchangeList(
+    patientId: ID
+    exchangeType: String
+    status: String
+    _count: Int
+  ): [DataExchange]
+
+  syncJob(id: ID!): SyncJob
+  syncJobList(
+    connectionId: ID
+    status: SyncJobStatus
+    _count: Int
+  ): [SyncJob]
+
+  syncStatus(id: ID!): SyncStatus
+
+  user(id: ID!): User
+  userList(
+    email: String
+    externalId: String
+  ): [User]
+
+  app(id: ID!): App
+  appList(
+    status: String
+    _count: Int
+  ): [App]
+
+  payer(id: ID!): Payer
+  payerList(
+    state: String
+    supportsPatientAccess: Boolean
+    status: String
+    _count: Int
+  ): [Payer]
+
+  payerConnection(id: ID!): PayerConnection
+  payerConnectionList(
+    userId: ID
+    payerId: ID
+    status: String
+  ): [PayerConnection]
+
+  webhookEvent(id: ID!): WebhookEvent
+  webhookEventList(
+    eventType: String
+    userId: ID
+    connectionId: ID
+    deliveryStatus: String
+    _count: Int
+  ): [WebhookEvent]
+}
+
+# ---------------------------------------------------------------------------
+# Mutation root
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  # FHIR resource create/update/delete
+  createPatient(input: PatientInput!): Patient
+  updatePatient(id: ID!, input: PatientInput!): Patient
+  deletePatient(id: ID!): Boolean
+
+  createObservation(input: ObservationInput!): Observation
+  updateObservation(id: ID!, input: ObservationInput!): Observation
+  deleteObservation(id: ID!): Boolean
+
+  createCondition(input: ConditionInput!): Condition
+  updateCondition(id: ID!, input: ConditionInput!): Condition
+  deleteCondition(id: ID!): Boolean
+
+  createMedicationRequest(input: MedicationRequestInput!): MedicationRequest
+  updateMedicationRequest(id: ID!, input: MedicationRequestInput!): MedicationRequest
+
+  createDocumentReference(input: DocumentReferenceInput!): DocumentReference
+  updateDocumentReference(id: ID!, input: DocumentReferenceInput!): DocumentReference
+  deleteDocumentReference(id: ID!): Boolean
+
+  createSubscription(input: SubscriptionInput!): Subscription
+  updateSubscription(id: ID!, input: SubscriptionInput!): Subscription
+  deleteSubscription(id: ID!): Boolean
+
+  # 1upHealth platform mutations
+  createPatientConnection(userId: ID!, sourceId: ID!, authCode: String): PatientConnection
+  deletePatientConnection(id: ID!): Boolean
+
+  createConsentRecord(input: ConsentInput!): ConsentRecord
+  revokeConsentRecord(id: ID!): ConsentRecord
+
+  triggerSync(connectionId: ID!): SyncJob
+  cancelSyncJob(id: ID!): SyncJob
+
+  createWebhookSubscription(input: WebhookInput!): WebhookEvent
+  deleteWebhookSubscription(id: ID!): Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Input types (simplified)
+# ---------------------------------------------------------------------------
+
+input PatientInput {
+  identifier: [IdentifierInput]
+  active: Boolean
+  name: [HumanNameInput]
+  telecom: [ContactPointInput]
+  gender: Code
+  birthDate: Date
+  address: [AddressInput]
+}
+
+input ObservationInput {
+  status: Code!
+  category: [CodeableConceptInput]
+  code: CodeableConceptInput!
+  subject: ReferenceInput!
+  effectiveDateTime: DateTime
+  valueQuantity: QuantityInput
+  valueString: String
+  note: [AnnotationInput]
+}
+
+input ConditionInput {
+  clinicalStatus: CodeableConceptInput
+  verificationStatus: CodeableConceptInput
+  category: [CodeableConceptInput]
+  code: CodeableConceptInput
+  subject: ReferenceInput!
+  onsetDateTime: DateTime
+  recordedDate: DateTime
+  note: [AnnotationInput]
+}
+
+input MedicationRequestInput {
+  status: Code!
+  intent: Code!
+  medicationCodeableConcept: CodeableConceptInput
+  subject: ReferenceInput!
+  authoredOn: DateTime
+  dosageInstruction: [DosageInput]
+}
+
+input DocumentReferenceInput {
+  status: Code!
+  type: CodeableConceptInput
+  subject: ReferenceInput
+  date: String
+  content: [DocumentReferenceContentInput]!
+}
+
+input DocumentReferenceContentInput {
+  attachment: AttachmentInput!
+}
+
+input AttachmentInput {
+  contentType: Code
+  url: URL
+  title: String
+  data: Base64Binary
+}
+
+input SubscriptionInput {
+  status: Code!
+  reason: String!
+  criteria: String!
+  channel: SubscriptionChannelInput!
+}
+
+input SubscriptionChannelInput {
+  type: Code!
+  endpoint: URL
+  payload: Code
+  header: [String]
+}
+
+input ConsentInput {
+  patientId: ID!
+  sourceId: ID
+  purpose: String
+  scope: [String]
+  expiresAt: DateTime
+}
+
+input WebhookInput {
+  url: URL!
+  eventTypes: [String]!
+  secret: String
+}
+
+input IdentifierInput {
+  system: URI
+  value: String
+}
+
+input HumanNameInput {
+  use: Code
+  family: String
+  given: [String]
+}
+
+input ContactPointInput {
+  system: Code
+  value: String
+  use: Code
+}
+
+input AddressInput {
+  use: Code
+  line: [String]
+  city: String
+  state: String
+  postalCode: String
+  country: String
+}
+
+input CodeableConceptInput {
+  coding: [CodingInput]
+  text: String
+}
+
+input CodingInput {
+  system: URI
+  code: Code
+  display: String
+}
+
+input QuantityInput {
+  value: Decimal
+  unit: String
+  system: URI
+  code: Code
+}
+
+input ReferenceInput {
+  reference: String
+  display: String
+}
+
+input AnnotationInput {
+  authorString: String
+  time: DateTime
+  text: Markdown!
+}
+
+input DosageInput {
+  text: String
+  timing: TimingInput
+  doseAndRate: [DosageDoseAndRateInput]
+}
+
+input TimingInput {
+  repeat: TimingRepeatInput
+  code: CodeableConceptInput
+}
+
+input TimingRepeatInput {
+  frequency: PositiveInt
+  period: Decimal
+  periodUnit: Code
+}
+
+input DosageDoseAndRateInput {
+  type: CodeableConceptInput
+  doseQuantity: QuantityInput
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

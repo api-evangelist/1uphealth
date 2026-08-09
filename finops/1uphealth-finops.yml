@@ -1,0 +1,101 @@
+name: 1upHealth API FinOps Framework
+description: >
+  FinOps Framework FOCUS-aligned cost and usage considerations for the 1upHealth
+  FHIR-based health data interoperability platform. 1upHealth uses enterprise custom
+  pricing; all cost optimization and chargeback recommendations apply within the context
+  of negotiated enterprise agreements with the 1upHealth sales team.
+specificationVersion: '1.0'
+framework: FinOps Framework
+alignment: FOCUS 1.0
+url: https://1up.health/
+provider: 1upHealth
+costDrivers:
+  - name: API Product Selection
+    description: >
+      1upHealth costs are driven primarily by which API products are licensed: Patient
+      Access, Provider Access, Payer-to-Payer, Provider Directory, Electronic Prior
+      Authorization, and Formulary. Each product carries a separate licensing fee;
+      bundling products in a platform agreement may reduce per-product cost.
+    category: License
+    optimization: >
+      Audit which CMS-mandated APIs are actually required for compliance deadlines and
+      phase product adoption to align spend with regulatory timelines (e.g., Provider
+      Access required by January 2027).
+
+  - name: Member Connections / Covered Lives
+    description: >
+      Historical pricing for connection-based services has ranged from approximately
+      $200–$450 per month per connection. Enterprise agreements for health plans with
+      large member populations should negotiate volume pricing tiers.
+    category: Usage
+    unit: per-connection / per-member
+    optimization: >
+      Negotiate volume tiers based on total covered lives. Confirm whether inactive
+      members or disenrolled members count toward billed connections.
+
+  - name: Bulk Data Export Volume
+    description: >
+      FHIR Bulk Export operations for Provider Access and Payer-to-Payer APIs generate
+      large NDJSON payloads. Data egress and storage of exported files may incur costs
+      depending on the enterprise agreement and cloud infrastructure used for downstream
+      processing.
+    category: Usage
+    unit: GB / export-job
+    optimization: >
+      Schedule bulk exports during off-peak windows. Implement incremental exports using
+      FHIR _since parameters where supported to avoid redundant data retrieval. Compress
+      and archive NDJSON files promptly.
+
+  - name: Developer Portal and Implementation
+    description: >
+      Developer accounts are provisioned through the 1up Dev Portal. Implementation and
+      onboarding support may be bundled in enterprise agreements or charged separately as
+      professional services. Factor in internal engineering effort for OAuth 2.0 integration,
+      FHIR parsing, and compliance validation.
+    category: Professional Services
+    optimization: >
+      Leverage 1upHealth's reference documentation and sample data (github.com/1uphealth/1upSampleData)
+      to reduce integration time. Request sandbox environment access to validate integrations
+      before incurring production costs.
+
+  - name: HIPAA Compliance and Security Infrastructure
+    description: >
+      1upHealth is HITRUST r2 and SOC 2 Type II certified. These certifications and the
+      underlying HIPAA-compliant cloud infrastructure are included in enterprise licensing.
+      Organizations benefit from shared compliance costs compared to building equivalent
+      infrastructure independently.
+    category: Compliance
+    optimization: >
+      Factor in avoided compliance build costs (HIPAA infrastructure, HITRUST audit,
+      SOC 2) when calculating total cost of ownership vs. self-hosted FHIR server solutions.
+
+costAllocation:
+  - dimension: API Product
+    description: Allocate costs by product (Patient Access, Provider Access, etc.) to map against specific CMS mandates
+  - dimension: Business Unit / Line of Business
+    description: For payers with multiple lines of business (Medicare Advantage, Medicaid, Commercial), allocate API costs by LOB member population
+  - dimension: Environment
+    description: Separate sandbox/development usage costs from production to track true operational spend
+  - dimension: Compliance Program
+    description: Tag costs to specific regulatory requirements (CMS-0057-F, CMS-4201-F) for audit and reporting
+
+budgeting:
+  - recommendation: >
+      Align API licensing budget cycles with CMS regulatory compliance timelines;
+      Provider Access API compliance deadline is January 1, 2027.
+  - recommendation: >
+      Request multi-year contract pricing from 1upHealth to lock in rates ahead of
+      anticipated regulatory-driven demand increases.
+  - recommendation: >
+      Include implementation/professional services estimates (internal engineering,
+      QA, compliance validation) as a separate line item from API licensing fees.
+  - recommendation: >
+      Monitor 1upHealth status page (status.1up.health) SLA uptime metrics and ensure
+      enterprise agreement includes uptime SLA credits for unplanned downtime.
+
+contact:
+  sales: https://1up.health/
+  phone: +1 (888)-344-7187
+  address: "280 Summer Street, Boston, MA 02210"
+  trust: https://trust.1up.health
+  support: https://1uphealth.my.site.com

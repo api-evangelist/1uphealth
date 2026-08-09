@@ -1,0 +1,62 @@
+name: 1upHealth API Rate Limits
+description: >
+  1upHealth monitors API usage to ensure platform stability and fair access across all clients.
+  Specific rate limit thresholds are configurable per client and not publicly disclosed; contact
+  1upHealth support or your account team for your plan's specific limits. The platform uses
+  OAuth 2.0 Bearer tokens with configurable token expiration. For bulk data operations, FHIR
+  Bulk Export uses asynchronous processing patterns per the HL7 FHIR Async Request Pattern.
+specificationVersion: '0.1'
+url: https://docs.1up.health/docs
+limits:
+  - name: API Request Rate Limit
+    description: >
+      1upHealth configures API rate limits on a per-client basis and monitors applications
+      to identify excessive API request patterns. Clients exceeding configured thresholds
+      may receive HTTP 429 Too Many Requests responses. Contact your account team for
+      specific rate limit allocations.
+    type: requests
+    period: configurable
+    limit: contact-for-details
+    scope: per-client
+    enforcement: HTTP 429 Too Many Requests
+  - name: FHIR Bulk Export Rate Limit
+    description: >
+      Bulk data export operations via FHIR Bulk Export API use an asynchronous request
+      pattern. Clients kick off export jobs and poll for completion via status endpoints.
+      Concurrent bulk jobs may be limited per client to ensure resource availability.
+      Bulk data scope requires: bulk-data|user/*.rs
+    type: concurrent-jobs
+    period: asynchronous
+    limit: contact-for-details
+    scope: per-client
+    pattern: async-polling
+    scope_required: "bulk-data|user/*.rs"
+  - name: OAuth 2.0 Token Limits
+    description: >
+      Access tokens are issued via OAuth 2.0 client credentials flow or authorization code
+      flow. Tokens have a configurable expiration period. Token refresh follows standard
+      OAuth 2.0 patterns. Client credentials (client_id, client_secret) are obtained via
+      the 1up Dev Portal.
+    type: tokens
+    authentication_endpoint: https://gateway.1up.health/auth/realms/dev-portal/protocol/openid-connect/token
+    grant_types:
+      - client_credentials
+      - authorization_code
+    token_format: Bearer
+    expiration: configurable
+  - name: Patient Connect Search Rate Limit
+    description: >
+      The System Search API for discovering and connecting to health systems and payer
+      networks has rate limits to protect directory services. Contact 1upHealth for
+      specific thresholds for your integration.
+    type: requests
+    api: System Search API
+    limit: contact-for-details
+    scope: per-application
+notes:
+  - "Rate limit details are not publicly disclosed and are configured per enterprise client"
+  - "FHIR Bulk Export uses HL7 async pattern (kick-off, status poll, download)"
+  - "Monitoring: 1upHealth actively monitors for applications making excessive API requests"
+  - "For rate limit increases or specific thresholds, contact support or account team"
+  - "Status page: https://status.1up.health"
+  - "Support portal: https://1uphealth.my.site.com"
