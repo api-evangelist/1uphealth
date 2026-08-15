@@ -1,0 +1,189 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  Derived from fhir/1uphealth-fhir-r4-capabilitystatement.json (live FHIR R4
+  CapabilityStatement, 144 resource types) — reference-shaped search parameters
+  (patient, subject, encounter, practitioner, performer, requester, author,
+  organization, location, based-on, part-of, beneficiary, payor, insurer,
+  provider, etc.) on each declared resource were read as the resource's
+  reference relationships. This is HL7 FHIR's standard reference model, not a
+  1upHealth-proprietary schema; the resource set and search parameters below are
+  the ones the platform actually declares. Enriched against
+  graphql/1uphealth-schema.graphql field names for the same resources.
+notes: >-
+  Only the clinical/claims/administrative "marquee" resources are graphed here
+  (34 of 144 declared types) rather than the full FHIR resource set, to keep the
+  entity graph legible; see fhir/1uphealth-fhir-r4-capabilitystatement.json for
+  the complete list. id_domain follows FHIR's logical-id-in-URL convention:
+  {baseURL}/{ResourceType}/{id}.
+id_domain: https://api.1up.health/fhir/r4/{ResourceType}/{id}
+entities:
+- name: Patient
+  relationships:
+  - { type: belongs_to, target: Practitioner, via: general-practitioner }
+  - { type: belongs_to, target: Organization, via: organization (managingOrganization) }
+- name: Practitioner
+  relationships: []
+- name: PractitionerRole
+  relationships:
+  - { type: belongs_to, target: Practitioner, via: practitioner }
+  - { type: belongs_to, target: Organization, via: organization }
+  - { type: belongs_to, target: Location, via: location }
+- name: Organization
+  relationships: []
+- name: Location
+  relationships:
+  - { type: belongs_to, target: Organization, via: organization }
+- name: Encounter
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: Practitioner, via: practitioner }
+  - { type: belongs_to, target: Encounter, via: part-of (parent encounter) }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+- name: Condition
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Practitioner, via: asserter }
+- name: Observation
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Device, via: device }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+  - { type: belongs_to, target: Observation, via: part-of }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: DiagnosticReport
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: Procedure
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+  - { type: belongs_to, target: Procedure, via: part-of }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: MedicationRequest
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Practitioner, via: requester }
+  - { type: has_one, target: Medication, via: medicationReference (contained/coded) }
+- name: MedicationDispense
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: context }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: MedicationStatement
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: context }
+  - { type: belongs_to, target: MedicationStatement, via: part-of }
+- name: Medication
+  relationships: []
+- name: AllergyIntolerance
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Practitioner, via: asserter/recorder }
+- name: Immunization
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: CarePlan
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+  - { type: belongs_to, target: CarePlan, via: part-of }
+  - { type: belongs_to, target: Practitioner, via: performer }
+- name: CareTeam
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+- name: Goal
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+- name: ServiceRequest
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+  - { type: belongs_to, target: Practitioner, via: performer/requester }
+- name: DocumentReference
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Practitioner, via: author }
+  - { type: belongs_to, target: Location, via: location }
+- name: Composition
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+  - { type: belongs_to, target: Encounter, via: encounter/context }
+  - { type: belongs_to, target: Practitioner, via: author }
+- name: Coverage
+  relationships:
+  - { type: belongs_to, target: Patient, via: beneficiary/patient }
+  - { type: belongs_to, target: Organization, via: payor }
+- name: Claim
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Organization, via: insurer }
+  - { type: belongs_to, target: Practitioner, via: provider }
+  - { type: has_many, target: ClaimResponse, via: ClaimResponse.request -> Claim }
+- name: ClaimResponse
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Organization, via: insurer }
+  - { type: belongs_to, target: Claim, via: request }
+- name: ExplanationOfBenefit
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Encounter, via: encounter }
+  - { type: belongs_to, target: Organization, via: insurer }
+  - { type: belongs_to, target: Practitioner, via: provider }
+  - { type: belongs_to, target: Claim, via: claim (implicit, not a declared FHIR searchParam) }
+- name: InsurancePlan
+  relationships: []
+- name: Device
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: Organization, via: organization }
+- name: Endpoint
+  relationships:
+  - { type: belongs_to, target: Organization, via: organization }
+- name: HealthcareService
+  relationships:
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: Organization, via: organization }
+- name: AuditEvent
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+- name: Provenance
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Location, via: location }
+- name: Subscription
+  relationships: []
+- name: Appointment
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient }
+  - { type: belongs_to, target: Location, via: location }
+  - { type: belongs_to, target: Practitioner, via: practitioner }
+  - { type: belongs_to, target: ServiceRequest, via: based-on }
+- name: Account
+  relationships:
+  - { type: belongs_to, target: Patient, via: patient/subject }
+hub_entity: Patient
+hub_note: >-
+  Every clinical, claims, and administrative resource above ultimately traces
+  back to Patient (directly, or transitively via Encounter/Coverage/Claim),
+  consistent with FHIR's patient-compartment model that 1up's Patient
+  Access / Bulk Data ($everything, $export) operations rely on.

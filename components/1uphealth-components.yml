@@ -1,0 +1,30 @@
+generated: '2026-08-14'
+method: searched
+source: https://www.npmjs.com/package/fhir-react (repository github.com/1uphealth/fhir-react)
+notes: >-
+  1upHealth's one confirmed first-party embeddable surface is fhir-react, a
+  React component library for rendering HL7 FHIR resources — distinct from an
+  SDK because it renders UI, not API calls. Cross-referenced from
+  packages/1uphealth-packages.yml (registry entry) to avoid duplicating the
+  version/currency data there.
+components:
+- family: fhir-react
+  kind: React component library (embeddable UI)
+  description: >-
+    Renders individual FHIR resources (DSTU2/STU3/R4) as formatted, human-readable
+    cards/tables inside a host React app — e.g. a Patient banner, an Observation
+    or MedicationRequest detail view — rather than exposing raw JSON.
+  loader: npm (fhir-react), MIT licensed
+  package_ref: packages/1uphealth-packages.yml#fhir-react
+  official: true
+- family: 1up Provider Search widget
+  kind: React component (unclear current support)
+  description: >-
+    A provider/health-system search UI component (npm package
+    1uphealth-provider-search) referenced from 2019-era documentation; the
+    hosting repository is no longer publicly resolvable and currency could not
+    be confirmed. Recorded honestly as a historical, not currently-verified,
+    component.
+  loader: npm (1uphealth-provider-search)
+  package_ref: packages/1uphealth-packages.yml#1uphealth-provider-search
+  official: false

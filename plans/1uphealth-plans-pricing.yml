@@ -1,3 +1,8 @@
+generated: '2026-08-14'
+method: searched
+source: https://1up.health/ + https://docs.1up.health/help-center/Content/en-US/get-started/cms-patient-access/developer-overview.html
+  + https://1up.health/products/1up-comply/1up-provider-access-api/
+plan_count: 6
 name: 1upHealth API Plans and Pricing
 description: >
   1upHealth offers enterprise health data interoperability solutions for payers, health plans,

@@ -1,3 +1,12 @@
+generated: '2026-08-14'
+method: searched
+source: https://docs.1up.health/docs + https://docs.1up.health/help-center/Content/en-US/get-started/cms-patient-access/
+limit_count: 4
+notes_on_disclosure: >-
+  4 rate-limit categories are documented by name/mechanism (request rate, bulk
+  export concurrency, OAuth token, System Search), but no numeric thresholds
+  (requests/window, burst) or response headers (X-RateLimit-*, Retry-After) are
+  publicly disclosed — only the HTTP 429 status on exhaustion is documented.
 name: 1upHealth API Rate Limits
 description: >
   1upHealth monitors API usage to ensure platform stability and fair access across all clients.

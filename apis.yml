@@ -40,7 +40,7 @@ tags:
 - Patient Access
 - Health Data
 created: '2026-07-24'
-modified: '2026-08-08'
+modified: '2026-08-14'
 specificationVersion: '0.19'
 apis:
 - aid: 1uphealth:1uphealth-fhir-r4-api
@@ -274,8 +274,21 @@ common:
   url: rate-limits/1uphealth-rate-limits.yml
 - type: FinOps
   url: finops/1uphealth-finops.yml
+- type: Packages
+  url: packages/1uphealth-packages.yml
+- type: SDKs
+  url: packages/1uphealth-packages.yml
+- type: Components
+  url: components/1uphealth-components.yml
+- type: DataModel
+  url: data-model/1uphealth-data-model.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 x-merged-from:
 - 1up-health
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 3
+  pass: local-v1

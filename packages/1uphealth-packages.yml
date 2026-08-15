@@ -1,0 +1,96 @@
+generated: '2026-08-14'
+method: searched
+source: npm registry (registry.npmjs.org) + GitHub org github.com/1uphealth
+notes: >-
+  1upHealth does not publish REST/OAuth SDKs in the conventional sense (no
+  language client wrapping the FHIR API); its one actively-maintained first-party
+  package is fhir-react, a UI component library for rendering FHIR resources
+  (also indexed separately under components/1uphealth-components.yml). The
+  matching source repo (github.com/1uphealth/fhir-react) is no longer publicly
+  visible on GitHub (404 as of 2026-08-14) even though the npm package continues
+  to ship current releases — the org's public repo list (github.com/1uphealth)
+  currently shows only forks/tooling repos, not fhir-react itself. Several other
+  1uphealth-related npm packages were found and are recorded as non-official:
+  a 2019 unscoped provider-search widget whose hosting repo is gone, two
+  @1uphealth-temp/* packages last published in 2019 (7+ years stale — an
+  abandonment signal, not a supported package), and two community forks of
+  fhir-react maintained by third-party individuals, not 1upHealth staff.
+packages:
+- name: fhir-react
+  registry: npm
+  official: true
+  version: '2.1.1'
+  published: '2026-04-20'
+  url: https://www.npmjs.com/package/fhir-react
+  repository: https://github.com/1uphealth/fhir-react
+  license: MIT
+  note: >-
+    React component library for displaying HL7 FHIR resources (DSTU2/STU3/R4),
+    published under author "1upHealth" <eng@1up.health> with maintainers on
+    @1up.health email addresses (1uphealthadmin, beck.spencer-strong,
+    tony.wieczorek). Actively maintained — latest release 2026-04-20.
+- name: 1uphealth-provider-search
+  registry: npm
+  official: false
+  version: '0.3.0'
+  published: '2019-05-02'
+  url: https://www.npmjs.com/package/1uphealth-provider-search
+  note: >-
+    Unscoped React provider-search widget. No repository field on the npm
+    record and the era-matching GitHub repos referencing 1upHealth React
+    components no longer resolve publicly; provenance as a currently-supported
+    first-party package could not be confirmed, and it has not been updated
+    since 2019.
+- name: "@1uphealth-temp/provider-search"
+  registry: npm
+  official: false
+  version: '0.5.6'
+  published: '2019-06-06'
+  url: https://www.npmjs.com/package/@1uphealth-temp/provider-search
+  note: >-
+    Scoped under an npm org literally named "1uphealth-temp" with homepage
+    https://1up.health/ set in package metadata, suggesting an internal
+    staging publish rather than a supported release channel. No repository
+    field; last published 2019-06-06 (7+ years stale) — abandonment signal,
+    not a supported SDK.
+- name: "@1uphealth-temp/api"
+  registry: npm
+  official: false
+  version: '0.5.6'
+  published: '2019-06-06'
+  url: https://www.npmjs.com/package/@1uphealth-temp/api
+  note: Companion API-client package under the same 1uphealth-temp staging scope; same abandonment finding as above.
+- name: fhir-react-19
+  registry: npm
+  official: false
+  version: '1.0.2'
+  published: '2025-07-30'
+  url: https://www.npmjs.com/package/fhir-react-19
+  note: >-
+    Community fork of fhir-react republished for React 19 compatibility.
+    Maintained by a third-party individual (arbisoft.com), not 1upHealth staff;
+    the author field is inherited from the original package.json and is not
+    evidence of first-party status.
+- name: custom-fhir-react
+  registry: npm
+  official: false
+  version: '0.5.0'
+  published: '2022-02-10'
+  url: https://www.npmjs.com/package/custom-fhir-react
+  note: Another community fork of fhir-react, maintained by a third-party individual, not 1upHealth staff.
+not_found:
+- registry: PyPI
+  queries: ['1up-health', '1uphealth']
+  status: 404
+- registry: RubyGems
+  query: 1uphealth
+  result: no matches
+- registry: crates.io
+  query: 1uphealth
+  result: no matches
+- registry: NuGet
+  query: 1uphealth
+  result: no matches
+- registry: Maven Central
+  query: 1uphealth
+  result: no matches
