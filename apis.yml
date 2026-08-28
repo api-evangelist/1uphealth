@@ -14,6 +14,17 @@ description: 1upHealth is a US healthcare data interoperability company, founded
   is HITRUST, SOC 2, and HIPAA aligned. Home market is the United States. Developer documentation is public
   at docs.1up.health, while provisioning API credentials and the developer console require an account
   (gated self-serve / partner onboarding).
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: gated
