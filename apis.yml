@@ -39,7 +39,21 @@ accessModel:
   generated: '2026-07-24'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+x-docs-platform: redocly
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-17
 tags:
+- Healthcare
+- United States
+- FHIR
+- HL7
+- Interoperability
+- SMART on FHIR
+- Payers
+- Claims
+- Patient Access
+- Health Data
+tags_raw:
 - Healthcare
 - United States
 - FHIR
@@ -110,6 +124,10 @@ apis:
   tags:
   - Patient Access
   - FHIR
+  - Payers
+  tags_raw:
+  - Patient Access
+  - FHIR
   - Payer
   properties:
   - type: Documentation
@@ -123,6 +141,10 @@ apis:
   humanURL: https://docs.1up.health/docs/provider-access
   baseURL: https://api.1up.health/fhir/r4
   tags:
+  - Provider Access
+  - FHIR
+  - Payers
+  tags_raw:
   - Provider Access
   - FHIR
   - Payer
@@ -140,6 +162,10 @@ apis:
   tags:
   - Payer to Payer
   - FHIR
+  - Payers
+  tags_raw:
+  - Payer to Payer
+  - FHIR
   - Payer
   properties:
   - type: Documentation
@@ -155,6 +181,10 @@ apis:
   tags:
   - Provider Directory
   - FHIR
+  - Payers
+  tags_raw:
+  - Provider Directory
+  - FHIR
   - Payer
   properties:
   - type: Documentation
@@ -168,6 +198,10 @@ apis:
   humanURL: https://docs.1up.health/docs/epa
   baseURL: https://api.1up.health/fhir/r4
   tags:
+  - Prior Authorization
+  - FHIR
+  - Payers
+  tags_raw:
   - Prior Authorization
   - FHIR
   - Payer
