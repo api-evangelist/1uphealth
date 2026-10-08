@@ -100,3 +100,46 @@ plans:
       - FHIR R4 full resource support
       - JSON and XML data formats
       - Bulk data export capability
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Patient Access API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Provider Access API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Payer-to-Payer Data Exchange API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Provider Directory API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Electronic Prior Authorization API
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: 1up Platform (Enterprise)
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
