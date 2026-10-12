@@ -1,0 +1,143 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 11
+  own: 7
+  other_domain: 1
+  platform: 3
+  roles:
+  - api
+  - identity
+  - other
+  - portal
+  - security
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: 1up.health
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - Newsroom
+  - Leadership
+  - Website
+  - Blog
+  - TermsOfService
+  - PrivacyPolicy
+  - BlogRSS
+  serves:
+  - cdn
+  vendor: cloudflare
+  registrable_domain: 1up.health
+  role: website
+  relation: own
+- host: 1uphealth.my.site.com
+  found_by:
+  - pointer
+  types:
+  - Support
+  serves: []
+  registrable_domain: site.com
+  role: support
+  relation: other-domain
+- host: api.1up.health
+  found_by:
+  - apis[]
+  - vendor-detect
+  types: []
+  serves:
+  - api
+  - api-gateway
+  vendor: aws-api-gateway
+  registrable_domain: 1up.health
+  role: api
+  relation: own
+- host: app.1up.health
+  found_by:
+  - pointer
+  types:
+  - SignUp
+  serves: []
+  registrable_domain: 1up.health
+  role: identity
+  relation: own
+- host: developer.1up.health
+  found_by:
+  - pointer
+  types:
+  - DeveloperConsole
+  serves: []
+  registrable_domain: 1up.health
+  role: portal
+  relation: own
+- host: docs.1up.health
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - Postman
+  serves:
+  - docs
+  - cdn
+  vendor: cloudfront
+  registrable_domain: 1up.health
+  role: portal
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  - GitHub
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: status.1up.health
+  found_by:
+  - pointer
+  types:
+  - StatusPage
+  serves: []
+  registrable_domain: 1up.health
+  role: status
+  relation: own
+- host: trust.1up.health
+  found_by:
+  - pointer
+  types:
+  - TrustCenter
+  - Security
+  - Compliance
+  serves: []
+  registrable_domain: 1up.health
+  role: security
+  relation: own
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: x.com
+  found_by:
+  - pointer
+  types:
+  - X
+  serves: []
+  registrable_domain: x.com
+  role: other
+  relation: platform

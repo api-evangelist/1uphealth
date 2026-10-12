@@ -1,5 +1,5 @@
 ---
-name: Create and update FHIR resources with optimistic concurrency
+name: write-with-concurrency
 description: Safely create (idempotently) and update FHIR resources on 1upHealth using If-None-Exist and If-Match/ETag.
 api: fhir/1uphealth-fhir-r4-capabilitystatement.json
 operations: [create, update, vread]

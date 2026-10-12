@@ -1,5 +1,5 @@
 ---
-name: Authenticate and query a patient's FHIR data
+name: query-patient-data
 description: Get a SMART-on-FHIR token, then search and read a patient's clinical/claims data from the 1up FHIR R4 API.
 api: fhir/1uphealth-fhir-r4-capabilitystatement.json
 operations: [token, search-type, read, Patient/$everything]

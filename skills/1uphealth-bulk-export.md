@@ -1,5 +1,5 @@
 ---
-name: Run a Bulk Data (Flat FHIR) group export
+name: bulk-export
 description: Kick off, poll, and download an asynchronous FHIR Bulk Data NDJSON export from 1upHealth.
 api: fhir/1uphealth-fhir-r4-capabilitystatement.json
 operations: [token, Group/$export]

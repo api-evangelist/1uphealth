@@ -1,0 +1,45 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/1uphealth/integrations
+- https://n8n.io/integrations/1uphealth/
+- https://composio.dev/toolkits/1uphealth
+- https://monid.ai/tools/1uphealth
+checked:
+- https://1up.health/integrations (404)
+- https://1up.health/partners
+- https://composio.dev/toolkits/1uphealth
+- https://monid.ai/tools/1uphealth
+- https://n8n.io/integrations/1uphealth/
+- https://zapier.com/apps/1uphealth/integrations
+summary: null
+marketplace_apps: []
+edges:
+- partner_name: Inovalon
+  partner: inovalon
+  type: claimed
+  evidence: https://1up.health/partners
+  direction: unknown
+- partner_name: ZS
+  partner: null
+  type: claimed
+  evidence: https://1up.health/partners
+  direction: unknown
+- partner_name: UST
+  partner: null
+  type: claimed
+  evidence: https://1up.health/partners
+  direction: unknown
+- partner_name: Axiom Systems
+  partner: null
+  type: claimed
+  evidence: https://1up.health/partners
+  direction: unknown
+- partner_name: Chordline Health
+  partner: null
+  type: claimed
+  evidence: https://1up.health/partners
+  direction: unknown
+templates: []
+note: Logo wall on the Partner Program page; HL7, Da Vinci, CARIN, The Sequoia Project and WEDI logos are standards/membership
+  bodies, not integration partners, and were excluded.

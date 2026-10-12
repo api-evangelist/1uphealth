@@ -1,7 +1,11 @@
 aid: 1uphealth
+
 url: https://raw.githubusercontent.com/api-evangelist/1uphealth/refs/heads/main/apis.yml
+
 name: 1upHealth
+
 kind: company
+
 description: 1upHealth is a US healthcare data interoperability company, founded in 2017 and headquartered
   in Boston, Massachusetts, that operates an HL7 FHIR-first health data platform for claims and clinical
   data acquisition, exchange, and compute. Built on a lakehouse architecture, the platform lets health
@@ -14,6 +18,7 @@ description: 1upHealth is a US healthcare data interoperability company, founded
   is HITRUST, SOC 2, and HIPAA aligned. Home market is the United States. Developer documentation is public
   at docs.1up.health, while provisioning API credentials and the developer console require an account
   (gated self-serve / partner onboarding).
+
 deliveryModel:
   model: saas
   open_source: false
@@ -25,6 +30,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: enterprise
   onboarding: gated
@@ -38,10 +44,15 @@ accessModel:
   - documentation
   generated: '2026-07-24'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
 x-docs-platform: redocly
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-09-17
+
 tags:
 - Healthcare
 - United States
@@ -53,6 +64,7 @@ tags:
 - Claims
 - Patient Access
 - Health Data
+
 tags_raw:
 - Healthcare
 - United States
@@ -64,9 +76,126 @@ tags_raw:
 - Claims
 - Patient Access
 - Health Data
+
 created: '2026-07-24'
+
 modified: '2026-08-14'
+
 specificationVersion: '0.23'
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
+common:
+- type: JSONLD
+  url: json-ld/1uphealth-context.jsonld
+- type: AgentCard
+  url: a2a/1uphealth-a2a.yml
+- type: MCPServer
+  url: mcp/1uphealth-mcp.yml
+- type: Hosts
+  url: hosts/1uphealth-hosts.yml
+- type: IntegrationEdges
+  url: integrations/1uphealth-integration-edges.yml
+- type: Vendors
+  url: vendors/1uphealth-vendors.yml
+- type: Newsroom
+  url: https://1up.health/news/
+- type: Leadership
+  url: https://1up.health/leadership/
+- type: TrustCenter
+  url: security/1uphealth-trust-center.yml
+- type: DomainSecurity
+  url: security/1uphealth-domain-security.yml
+- type: Website
+  url: https://1up.health/
+- type: DeveloperPortal
+  url: https://docs.1up.health/
+- type: Documentation
+  url: https://docs.1up.health/
+- type: DeveloperConsole
+  url: https://developer.1up.health/
+- type: Blog
+  url: https://1up.health/blog/
+- type: StatusPage
+  url: https://status.1up.health/
+- type: TrustCenter
+  url: https://trust.1up.health/
+- type: Security
+  url: https://trust.1up.health/
+- type: Support
+  url: https://1uphealth.my.site.com/
+- type: SignUp
+  url: https://app.1up.health/login
+- type: GitHubOrganization
+  url: https://github.com/1uphealth
+- type: TermsOfService
+  url: https://1up.health/terms-of-service/
+- type: PrivacyPolicy
+  url: https://1up.health/privacy-policy/
+- type: APIReference
+  url: https://docs.1up.health/help-center/Content/en-US/api-references/rest-api-reference.html
+- type: GettingStarted
+  url: https://docs.1up.health/docs/get-started/faq
+- type: Postman
+  url: https://docs.1up.health/help-center/Content/en-US/get-started/quick-start/postman.html
+- type: Authentication
+  url: authentication/1uphealth-authentication.yml
+- type: OAuthScopes
+  url: scopes/1uphealth-scopes.yml
+- type: Conventions
+  url: conventions/1uphealth-conventions.yml
+- type: Idempotency
+  url: conventions/1uphealth-conventions.yml
+- type: Conformance
+  url: conformance/1uphealth-conformance.yml
+- type: Compliance
+  url: https://trust.1up.health/
+- type: ErrorCatalog
+  url: errors/1uphealth-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/1uphealth-lifecycle.yml
+- type: ChangeLog
+  url: changelog/1uphealth-changelog.yml
+- type: LLMsTxt
+  url: llms/1uphealth-llms.txt
+- type: X-MCPServerCandidate
+  url: mcp/1uphealth-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Sandbox
+  url: sandbox/1uphealth-sandbox.yml
+- type: Webhooks
+  url: asyncapi/1uphealth-subscription-webhooks.yml
+- type: WellKnown
+  url: well-known/1uphealth-well-known.yml
+- type: GitHub
+  url: https://github.com/1uphealth
+- type: LinkedIn
+  url: https://www.linkedin.com/company/1uphealth/
+- type: X
+  url: https://x.com/1up_health
+- type: BlogRSS
+  url: https://1up.health/blog/feed/
+- type: JSONLDContext
+  url: json-ld/1uphealth-context.jsonld
+- type: Plans
+  url: plans/1uphealth-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/1uphealth-rate-limits.yml
+- type: FinOps
+  url: finops/1uphealth-finops.yml
+- type: Packages
+  url: packages/1uphealth-packages.yml
+- type: SDKs
+  url: packages/1uphealth-packages.yml
+- type: Components
+  url: components/1uphealth-components.yml
+- type: DataModel
+  url: data-model/1uphealth-data-model.yml
+
 apis:
 - aid: 1uphealth:1uphealth-fhir-r4-api
   name: 1up FHIR API (R4)
@@ -236,105 +365,11 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.1up.health/docs/pop-connect
-common:
-- type: TrustCenter
-  url: security/1uphealth-trust-center.yml
-- type: DomainSecurity
-  url: security/1uphealth-domain-security.yml
-- type: Website
-  url: https://1up.health/
-- type: DeveloperPortal
-  url: https://docs.1up.health/
-- type: Documentation
-  url: https://docs.1up.health/
-- type: DeveloperConsole
-  url: https://developer.1up.health/
-- type: Blog
-  url: https://1up.health/blog/
-- type: StatusPage
-  url: https://status.1up.health/
-- type: TrustCenter
-  url: https://trust.1up.health/
-- type: Security
-  url: https://trust.1up.health/
-- type: Support
-  url: https://1uphealth.my.site.com/
-- type: SignUp
-  url: https://app.1up.health/login
-- type: GitHubOrganization
-  url: https://github.com/1uphealth
-- type: TermsOfService
-  url: https://1up.health/terms-of-service/
-- type: PrivacyPolicy
-  url: https://1up.health/privacy-policy/
-- type: APIReference
-  url: https://docs.1up.health/help-center/Content/en-US/api-references/rest-api-reference.html
-- type: GettingStarted
-  url: https://docs.1up.health/docs/get-started/faq
-- type: Postman
-  url: https://docs.1up.health/help-center/Content/en-US/get-started/quick-start/postman.html
-- type: Authentication
-  url: authentication/1uphealth-authentication.yml
-- type: OAuthScopes
-  url: scopes/1uphealth-scopes.yml
-- type: Conventions
-  url: conventions/1uphealth-conventions.yml
-- type: Idempotency
-  url: conventions/1uphealth-conventions.yml
-- type: Conformance
-  url: conformance/1uphealth-conformance.yml
-- type: Compliance
-  url: https://trust.1up.health/
-- type: ErrorCatalog
-  url: errors/1uphealth-problem-types.yml
-- type: Lifecycle
-  url: lifecycle/1uphealth-lifecycle.yml
-- type: ChangeLog
-  url: changelog/1uphealth-changelog.yml
-- type: LLMsTxt
-  url: llms/1uphealth-llms.txt
-- type: X-MCPServerCandidate
-  url: mcp/1uphealth-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
-- type: AgentSkill
-  url: skills/_index.yml
-- type: Sandbox
-  url: sandbox/1uphealth-sandbox.yml
-- type: Webhooks
-  url: asyncapi/1uphealth-subscription-webhooks.yml
-- type: WellKnown
-  url: well-known/1uphealth-well-known.yml
-- type: GitHub
-  url: https://github.com/1uphealth
-- type: LinkedIn
-  url: https://www.linkedin.com/company/1uphealth/
-- type: X
-  url: https://x.com/1up_health
-- type: BlogRSS
-  url: https://1up.health/blog/feed/
-- type: JSONLDContext
-  url: json-ld/1uphealth-context.jsonld
-- type: Plans
-  url: plans/1uphealth-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/1uphealth-rate-limits.yml
-- type: FinOps
-  url: finops/1uphealth-finops.yml
-- type: Packages
-  url: packages/1uphealth-packages.yml
-- type: SDKs
-  url: packages/1uphealth-packages.yml
-- type: Components
-  url: components/1uphealth-components.yml
-- type: DataModel
-  url: data-model/1uphealth-data-model.yml
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
 x-merged-from:
 - 1up-health
 x-enrichment:
-  date: '2026-08-14'
+  date: 2026-10-12
   status: enriched
   artifacts_added: 3
-  pass: local-v1
+  pass: local-v5

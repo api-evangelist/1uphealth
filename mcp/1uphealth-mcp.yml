@@ -1,9 +1,8 @@
-generated: '2026-07-24'
-method: derived
-status: candidate
-source: Derived from fhir/1uphealth-fhir-r4-capabilitystatement.json interactions and operations (search-type,
-  read, vread, create, update, delete, $everything, $export, $validate). No official 1up MCP server is
-  published; this is a candidate tool surface.
+generated: '2026-10-12'
+method: probed
+status: live-docs-server
+source: https://docs.1up.health/mcp (POST initialize 200, tools/list 200, 2026-10-12), announced by https://docs.1up.health/.well-known/agent-card.json
+  (200). FHIR tool candidates below remain derived from fhir/1uphealth-fhir-r4-capabilitystatement.json.
 server:
   name: 1uphealth-fhir
   transport: http
@@ -69,8 +68,23 @@ tools:
   - resourceType
   - body
 deployment:
-  mode: none
-  verified: derived
-  tools: 8
-  checked: '2026-08-12'
-  source: catalog MCP census
+  mode: remote
+  endpoint: https://docs.1up.health/mcp
+  auth: none
+  verified: probed
+  checked: '2026-10-12'
+  note: Provider-hosted documentation MCP server (anonymous tools/list 200). It exposes docs search/discovery,
+    not the FHIR data API; the FHIR tools listed under tools[] are a derived candidate with no server.
+docs_server:
+  url: https://docs.1up.health/mcp
+  serverInfo:
+    name: Docs MCP server
+    version: '2026-10-12'
+  protocolVersion: '2025-06-18'
+  scope: documentation only (Redocly docs MCP); listApis returned total 0 API definitions, so it does
+    not invoke the FHIR API
+  tools_live:
+  - execute
+  - describe-tools
+  tools_list_saved: mcp/_original/1uphealth-docs-mcp-tools-list.json
+  auth: none
