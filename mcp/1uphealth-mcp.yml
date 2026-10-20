@@ -13,60 +13,49 @@ notes: A candidate MCP tool projection over the 1up FHIR API. Each tool maps to 
   one tool per resource. Real input schemas are the FHIR search parameters / resource profiles declared
   per resource in the CapabilityStatement.
 tools:
-- name: search_fhir_resources
-  description: Search any supported FHIR resource type with FHIR search parameters.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#search-type
-  inputs:
-  - resourceType
-  - searchParams
-  - _count
-  - _sort
-- name: read_fhir_resource
-  description: Read a single FHIR resource by type and id.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#read
-  inputs:
-  - resourceType
-  - id
-- name: vread_fhir_resource
-  description: Read a specific historical version of a resource.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#vread
-  inputs:
-  - resourceType
-  - id
-  - versionId
-- name: create_fhir_resource
-  description: Create a FHIR resource (optionally conditional via If-None-Exist).
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#create
-  inputs:
-  - resourceType
-  - body
-  - ifNoneExist
-- name: update_fhir_resource
-  description: Update a FHIR resource with optimistic concurrency (If-Match / ETag).
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#update
-  inputs:
-  - resourceType
-  - id
-  - body
-  - ifMatch
-- name: patient_everything
-  description: Retrieve all data in a patient's compartment.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#Patient/$everything
-  inputs:
-  - patientId
-- name: bulk_export
-  description: Kick off a Bulk Data (Flat FHIR) NDJSON export for a Group or the system.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#Group/$export
-  inputs:
-  - groupId
-  - _type
-  - _since
-- name: validate_fhir_resource
-  description: Validate a resource against its profile via $validate.
-  source_operation: fhir/1uphealth-fhir-r4-capabilitystatement.json#$validate
-  inputs:
-  - resourceType
-  - body
+- name: execute
+  description: 'Run JavaScript in a sandbox against the documentation tools on the global `tools` object.
+
+    The only extra global is `tools` - there is no `fetch`, `console`, `setTimeout`, `require`, or Node.js
+    API; all I/O goes through `tools`.
+
+
+    Workflow - minimize round-trips; one `describe-tools` call plus one `execute` call covers most requests:
+
+    1. Analyze the request and decide which sandbox tools it needs.
+
+    2. Call `describe-tools` with those names to get their exact TypeScript signatures - inputs, result
+    shapes, and a worked example. NEVER call `execute` with guessed method names, parameter names, enum
+    values, or result field names: read fields off the declared return types, not from assumptions.
+
+    3. Batch everything into a SINGLE script: chain tool calls, pass one call''s output into the next,
+    process results in plain JavaScript, and `return` only what the request needs.
+
+
+    Available tools (exact signatures come from `describe-tools`):
+
+    - listApis — Lists the APIs documented in this project
+
+    - getEndpoints — Get all endpoints for a specific API. When several definiti…
+
+    - getEndpointInfo — Get comprehensive information about specific endpoint inclu…
+
+    - getSecuritySchemes — Get the security schemes for a specific API. When several d…
+
+    - getFullApiDescription — Get the complete OpenAPI description. When several definiti…
+
+    - search — Search across the documentation to fetch relevant content f…
+
+    - submitFeedback — Report a documentation page that is wrong or incomplete'
+- name: describe-tools
+  description: 'Get the exact TypeScript signatures of the sandbox tools available to `execute`.
+
+    Analyze the user request first, then pass `tools` with only the tool names the request needs (every
+    name is listed in this input schema / description); omit `tools` only when you cannot tell which tools
+    apply.
+
+    Always call this before your first `execute` and never guess signatures. Request every tool the task
+    may need in ONE call instead of calling this repeatedly.'
 deployment:
   mode: remote
   endpoint: https://docs.1up.health/mcp
@@ -113,3 +102,4 @@ tool_quality:
   scored: false
   note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
     from Glimind's agent-readiness audit.
+tools_count: 2
