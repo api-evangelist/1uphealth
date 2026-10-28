@@ -1,4 +1,4 @@
-# 1upHealth (1uphealth)
+# 1upHealth
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,122 +64,157 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-1upHealth is a US healthcare data interoperability company (founded 2017, Boston, Massachusetts) that operates an HL7 FHIR-first health data platform for claims and clinical data acquisition, exchange, and compute. Built on a lakehouse architecture, it lets health plans, providers, and digital health developers ingest, normalize, store, and query patient and member data as FHIR, with modular solutions aligned to US federal interoperability mandates (CMS Interoperability & Prior Authorization / CMS-0057-F). Home market: United States.
+1upHealth is a US healthcare data interoperability company, founded in 2017 and headquartered in Boston, Massachusetts, that operates an HL7 FHIR-first health data platform for claims and clinical data acquisition, exchange, and compute. Built on a lakehouse architecture, the platform lets health plans, providers, and digital health developers ingest, normalize, store, and query patient and member data as FHIR, and ships modular solutions aligned to US federal interoperability mandates - Patient Access, Provider Access, Payer-to-Payer Data Exchange, Provider Directory, Formulary, and Electronic Prior Authorization (CMS Interoperability & Prior Authorization, CMS-0057-F). 1upHealth runs a managed, HIPAA-compliant FHIR REST API cloud server exposing FHIR R4 (4.0.1), STU3 (3.0.2), and DSTU2 (1.0.2) endpoints, each publishing a live CapabilityStatement, secured with SMART-on-FHIR OAuth 2.0. The company is HITRUST, SOC 2, and HIPAA aligned. Home market is the United States. Developer documentation is public at docs.1up.health, while provisioning API credentials and the developer console require an account (gated self-serve / partner onboarding).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/1uphealth/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/1uphealth/refs/heads/main/apis.yml)
+**Areas:** Healthcare · United States · FHIR · HL7 · Interoperability · SMART on FHIR · Payers · Claims · Patient Access · Health Data
 
-## Tags
+## 1upHealth on APIs.io
 
-- Healthcare
-- United States
-- FHIR
-- HL7
-- Interoperability
-- SMART on FHIR
-- Payer
-- Claims
-- Patient Access
-- Health Data
+Everything profiled for 1upHealth is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/1uphealth/](https://apis.io/providers/1uphealth/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (10)
 
-- **Created:** 2026-07-24
-- **Modified:** 2026-07-24
+- [1up FHIR API (R4)](https://apis.io/apis/1uphealth/1uphealth-fhir-r4-api/) — 1upHealth's managed HL7 FHIR R4 (4.0.1) REST API cloud server, exposing 144 FHIR resource types with SMART-on-FHIR OAuth 2.0 security. Publishes a live…
+- [1up FHIR API (STU3)](https://apis.io/apis/1uphealth/1uphealth-fhir-stu3-api/) — 1upHealth's managed HL7 FHIR STU3 (3.0.2) REST API cloud server, exposing 117 FHIR resource types. Publishes a live CapabilityStatement at /fhir/stu3/metadata.
+- [1up FHIR API (DSTU2)](https://apis.io/apis/1uphealth/1uphealth-fhir-dstu2-api/) — 1upHealth's managed HL7 FHIR DSTU2 (1.0.2) REST API cloud server, exposing 94 FHIR resource types. Publishes a live Conformance statement at…
+- [1up Patient Access API](https://apis.io/apis/1uphealth/1uphealth-patient-access-api/) — CMS Patient Access solution delivering member clinical and claims data to patient-authorized third-party apps over FHIR, aligned to the CARIN Blue Button…
+- [1up Provider Access API](https://apis.io/apis/1uphealth/1uphealth-provider-access-api/) — CMS Provider Access solution enabling payers to share member data with in-network providers over FHIR, aligned to the Da Vinci implementation guides.
+- [1up Payer-to-Payer Data Exchange API](https://apis.io/apis/1uphealth/1uphealth-payer-to-payer-api/) — CMS Payer-to-Payer Data Exchange solution for sharing a member's historical clinical and claims data between health plans over FHIR when a member changes…
+- [1up Provider Directory API](https://apis.io/apis/1uphealth/1uphealth-provider-directory-api/) — Publicly accessible FHIR Provider Directory publishing accurate provider and network listings, aligned to the Da Vinci PDEX Plan-Net implementation guide.
+- [1up Electronic Prior Authorization API](https://apis.io/apis/1uphealth/1uphealth-epa-api/) — CMS-0057-F Electronic Prior Authorization solution automating prior authorization submission and decisioning over FHIR, aligned to the Da Vinci PAS / DTR /…
+- [1up Patient Connect](https://apis.io/apis/1uphealth/1uphealth-patient-connect-api/) — Connectivity solution that acquires patient-authorized clinical records from a national network of EHR/provider and payer connections and normalizes them…
+- [1up Population Connect (Bulk FHIR)](https://apis.io/apis/1uphealth/1uphealth-population-connect-api/) — Population-scale connectivity and Bulk Data (Flat FHIR) export solution for acquiring and computing over large member/patient populations as FHIR.
 
-## API Posture
+### Published properties
 
-1upHealth runs a managed, HIPAA-compliant FHIR REST API cloud server at `https://api.1up.health` that serves three FHIR versions concurrently, each publishing a live machine-readable conformance document (harvested verbatim into `fhir/`):
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **FHIR R4 (4.0.1)** — `https://api.1up.health/fhir/r4/metadata` — CapabilityStatement, 144 resources, SMART-on-FHIR security.
-- **FHIR STU3 (3.0.2)** — `https://api.1up.health/fhir/stu3/metadata` — CapabilityStatement, 117 resources.
-- **FHIR DSTU2 (1.0.2)** — `https://api.1up.health/fhir/dstu2/metadata` — Conformance, 94 resources.
+#### AsyncAPI (1)
 
-**Auth:** SMART-on-FHIR (OAuth 2.0) — authorize `https://auth.1up.health/oauth2/authorize/system`, token `https://auth.1up.health/oauth2/token`; authorization-code for patient access and client-credentials for system/bulk access. Public product docs are readable at [docs.1up.health](https://docs.1up.health/); API credentials require the login-gated developer console.
+Event-driven and webhook contracts.
 
-## APIs
+- [1Uphealth Subscription Webhooks](https://apis.io/asyncapis/1uphealth/1uphealth-subscription-webhooks/)
 
-### 1up FHIR API (R4)
+#### GraphQL (1)
 
-Managed HL7 FHIR R4 (4.0.1) REST server, 144 resource types, SMART-on-FHIR OAuth 2.0.
+GraphQL schemas.
 
-- **Human URL:** [https://docs.1up.health/docs/fhir-info](https://docs.1up.health/docs/fhir-info)
-- **Base URL:** `https://api.1up.health/fhir/r4`
-- [CapabilityStatement](fhir/1uphealth-fhir-r4-capabilitystatement.json)
+- [1upHealth GraphQL API](https://apis.io/graphqls/1uphealth/1uphealth-graphql/)
 
-### 1up FHIR API (STU3)
+#### MCP servers (1)
 
-Managed HL7 FHIR STU3 (3.0.2) REST server, 117 resource types.
+Model Context Protocol servers that expose the API to agents.
 
-- **Human URL:** [https://docs.1up.health/docs/fhir-info](https://docs.1up.health/docs/fhir-info)
-- **Base URL:** `https://api.1up.health/fhir/stu3`
-- [CapabilityStatement](fhir/1uphealth-fhir-stu3-capabilitystatement.json)
+- [1uphealth-fhir](https://apis.io/servers/1uphealth/1uphealth-fhir/)
 
-### 1up FHIR API (DSTU2)
+#### JSON-LD (1)
 
-Managed HL7 FHIR DSTU2 (1.0.2) REST server, 94 resource types.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://docs.1up.health/docs/fhir-info](https://docs.1up.health/docs/fhir-info)
-- **Base URL:** `https://api.1up.health/fhir/dstu2`
-- [CapabilityStatement](fhir/1uphealth-fhir-dstu2-conformance.json)
+- [1Uphealth Context](https://apis.io/jsonld/1uphealth/1uphealth-context/)
 
-### 1up Patient Access API
+#### Security (3)
 
-CMS Patient Access — member clinical and claims data to patient-authorized apps over FHIR (CARIN Blue Button / US Core).
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.1up.health/docs/patient-access](https://docs.1up.health/docs/patient-access)
+- [1Uphealth Authentication](https://apis.io/security/1uphealth/1uphealth-authentication/)
+- [1Uphealth Domain Security](https://apis.io/security/1uphealth/1uphealth-domain-security/)
+- [1Uphealth Trust Center](https://apis.io/security/1uphealth/1uphealth-trust-center/)
 
-### 1up Provider Access API
+#### OAuth scopes (1)
 
-CMS Provider Access — payer-to-provider member data sharing over FHIR (Da Vinci).
+The permissions the API asks for.
 
-- **Human URL:** [https://docs.1up.health/docs/provider-access](https://docs.1up.health/docs/provider-access)
+- [1Uphealth Scopes](https://apis.io/scopes/1uphealth/1uphealth-scopes/)
 
-### 1up Payer-to-Payer Data Exchange API
+#### Plans and pricing (1)
 
-CMS Payer-to-Payer — historical member data sharing between health plans over FHIR.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://docs.1up.health/docs/payer-to-payer](https://docs.1up.health/docs/payer-to-payer)
+- [1Uphealth Plans Pricing](https://apis.io/plans/1uphealth/1uphealth-plans-pricing/)
 
-### 1up Provider Directory API
+#### Rate limits (1)
 
-FHIR Provider Directory publishing provider/network listings (Da Vinci PDEX Plan-Net).
+Published request limits.
 
-- **Human URL:** [https://docs.1up.health/docs/provider-directory](https://docs.1up.health/docs/provider-directory)
+- [1Uphealth Rate Limits](https://apis.io/rate-limits/1uphealth/1uphealth-rate-limits/)
 
-### 1up Electronic Prior Authorization API
+#### FinOps (1)
 
-CMS-0057-F ePA — automated prior authorization over FHIR (Da Vinci PAS / DTR / CRD).
+What the API costs to run, by operation.
 
-- **Human URL:** [https://docs.1up.health/docs/epa](https://docs.1up.health/docs/epa)
+- [1Uphealth Finops](https://apis.io/finops/1uphealth/1uphealth-finops/)
 
-### 1up Patient Connect
+## Where to find this API
 
-Patient-authorized clinical record acquisition from a national EHR/provider/payer network, normalized to FHIR.
-
-- **Human URL:** [https://docs.1up.health/docs/patient-connect](https://docs.1up.health/docs/patient-connect)
-
-### 1up Population Connect (Bulk FHIR)
-
-Population-scale connectivity and Bulk Data (Flat FHIR) export.
-
-- **Human URL:** [https://docs.1up.health/docs/pop-connect](https://docs.1up.health/docs/pop-connect)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://1up.health/)
-- [Developer Portal](https://docs.1up.health/)
 - [Documentation](https://docs.1up.health/)
-- [Developer Console](https://developer.1up.health/)
-- [Blog](https://1up.health/blog/)
-- [Status Page](https://status.1up.health/)
-- [Trust Center](https://trust.1up.health/)
+- [Getting started](https://docs.1up.health/docs/get-started/faq)
+- [API reference](https://docs.1up.health/help-center/Content/en-US/api-references/rest-api-reference.html)
+- [Sign up](https://app.1up.health/login)
 - [Support](https://1uphealth.my.site.com/)
-- [Sign Up / Login](https://app.1up.health/login)
-- [GitHub Organization](https://github.com/1uphealth)
-- [Terms of Service](https://1up.health/terms-of-service/)
-- [Privacy Policy](https://1up.health/privacy-policy/)
+- [Blog](https://1up.health/blog/)
+- [Security](https://trust.1up.health/)
+- [Compliance](https://trust.1up.health/)
+- [Trust centre](https://trust.1up.health/)
+- [Terms of service](https://1up.health/terms-of-service/)
+- [Privacy policy](https://1up.health/privacy-policy/)
+- [GitHub](https://github.com/1uphealth)
+- [Status](https://status.1up.health/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 70.6** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 83.3 |
+| Contract quality | 57.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 84.2 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 81.6 |
+
+**Agent readiness 30.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 47.7** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/1uphealth/](https://apis.io/providers/1uphealth/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for 1upHealth: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/1uphealth/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
