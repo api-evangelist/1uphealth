@@ -117,33 +117,33 @@ Linked-data contexts for the provider's vocabulary.
 
 Authentication, trust centre, and vulnerability disclosure.
 
-- [1Uphealth Authentication](https://apis.io/security/1uphealth/1uphealth-authentication/)
-- [1Uphealth Domain Security](https://apis.io/security/1uphealth/1uphealth-domain-security/)
-- [1Uphealth Trust Center](https://apis.io/security/1uphealth/1uphealth-trust-center/)
+- [1upHealth Authentication](https://apis.io/security/1uphealth/1uphealth-authentication/)
+- [1upHealth Domain Security](https://apis.io/security/1uphealth/1uphealth-domain-security/)
+- [1upHealth Trust Center](https://apis.io/security/1uphealth/1uphealth-trust-center/)
 
 #### OAuth scopes (1)
 
 The permissions the API asks for.
 
-- [1Uphealth Scopes](https://apis.io/scopes/1uphealth/1uphealth-scopes/)
+- [1upHealth Scopes](https://apis.io/scopes/1uphealth/1uphealth-scopes/)
 
 #### Plans and pricing (1)
 
 Published plans, tiers and prices.
 
-- [1Uphealth Plans Pricing](https://apis.io/plans/1uphealth/1uphealth-plans-pricing/)
+- [1upHealth Plans Pricing](https://apis.io/plans/1uphealth/1uphealth-plans-pricing/)
 
 #### Rate limits (1)
 
 Published request limits.
 
-- [1Uphealth Rate Limits](https://apis.io/rate-limits/1uphealth/1uphealth-rate-limits/)
+- [1upHealth Rate Limits](https://apis.io/rate-limits/1uphealth/1uphealth-rate-limits/)
 
 #### FinOps (1)
 
 What the API costs to run, by operation.
 
-- [1Uphealth Finops](https://apis.io/finops/1uphealth/1uphealth-finops/)
+- [1upHealth Finops](https://apis.io/finops/1uphealth/1uphealth-finops/)
 
 ## Where to find this API
 
@@ -166,18 +166,18 @@ Links to the company's own pages. This repository publishes no copy of their spe
 
 ## API Evangelist rating
 
-**Kin Score 70.6** — exemplar · rubric 0.25.0 · scored 2026-10-23
+**Kin Score 68.9** — exemplar · rubric 0.28.1 · scored 2026-11-21
 
 | Facet | Score |
 |---|---|
 | Discoverability | 83.3 |
 | Contract quality | 57.0 |
 | Contract governance | 18.2 |
-| Operational transparency | 84.2 |
+| Operational transparency | 78.6 |
 | Developer ergonomics | 66.1 |
-| Access clarity | 81.6 |
+| Access clarity | 76.6 |
 
-**Agent readiness 30.6** — agent-ready
+**Agent readiness 32.8** — agent-ready
 
 | Agent-readiness dimension | Result |
 |---|---|
@@ -202,6 +202,10 @@ Links to the company's own pages. This repository publishes no copy of their spe
 | Agentic Commerce | — |
 | Pagination Ratio | na |
 | Operation Distinctiveness | na |
+| MCP Tool Quality | full |
+| Onboarding Descriptor | — |
+| Dns Aid Index | na |
+| Markdown Negotiation | na |
 
 **Regulatory alignment 47.7** — Health
 
